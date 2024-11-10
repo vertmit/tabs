@@ -17,7 +17,7 @@ document.getElementById("topSearchForm").addEventListener("submit", function(eve
 topSearchInput.addEventListener('keyup', (event) => {
   if (event.key === 'Enter') {
     const searchQuery = topSearchInput.value;
-    window.location.href = `search.html?q=${searchQuery}`;
+    window.location.href = `search?q=${searchQuery}`;
   }
   
 });
