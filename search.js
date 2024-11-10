@@ -2,7 +2,7 @@ document.title = 'Tabs Search - "'+searchQuery+'"';
 
 function addDiv(content, discription, index) {
   const link = document.createElement('a');
-  link.href = `profile.html?u=${index}&q=${searchQuery}`;
+  link.href = `profile?u=${index}&q=${searchQuery}`;
 
   const linkDiv = document.createElement('div');
   linkDiv.class = "linkDiv";
