@@ -9,6 +9,6 @@ document.getElementById("mainSearch").addEventListener("submit", function(event)
 searchInput.addEventListener('keyup', (event) => {
   if (event.key === 'Enter') {
     const searchQuery = searchInput.value;
-    window.location.href = `search.html?q=${searchQuery}`;
+    window.location.href = `search?q=${searchQuery}`;
   }
 });
