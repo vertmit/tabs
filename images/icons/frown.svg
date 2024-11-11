@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="shape-rendering:geometricPrecision;text-rendering:geometricPrecision;image-rendering:optimizeQuality;" viewBox="0 0 799 799" x="0px" y="0px" fill-rule="evenodd" clip-rule="evenodd">
+  <defs>
+    <style type="text/css">
+   
+    .fil0 {fill:black;fill-rule:nonzero}
+   
+  </style>
+  </defs>
+  <g>
+    <path class="fil0" d="M400 0c220,0 399,179 399,400 0,220 -179,399 -399,399 -221,0 -400,-179 -400,-399 0,-221 179,-400 400,-400zm127 248c28,0 52,23 52,52 0,29 -24,52 -52,52 -29,0 -52,-23 -52,-52 0,-29 23,-52 52,-52zm-255 0c29,0 52,23 52,52 0,29 -23,52 -52,52 -28,0 -52,-23 -52,-52 0,-29 24,-52 52,-52zm-26 337c-15,31 -63,8 -48,-23 69,-145 334,-145 403,0 15,31 -33,54 -48,23 -49,-105 -258,-105 -307,0zm154 -532c-192,0 -347,155 -347,347 0,191 155,346 347,346 191,0 346,-155 346,-346 0,-192 -155,-347 -346,-347z" style=""/>
+  </g>
+</svg>
