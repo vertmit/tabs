@@ -104,6 +104,13 @@ input#topSearch {
   border-radius: 65px;
   border: 4px solid black; 
   padding-inline: 15px;
+
+  
+}
+
+input#topSearch::selection { 
+  background: black;
+  color: white; 
 }
 
 form#topSearchForm {
@@ -123,10 +130,23 @@ input#topSearch:focus  {
 
 /* Search Page */
 
+#searchPfp {
+  border-radius: 7px;
+  margin: 10px;
+  width: 200px;
+  height: 200px;
+}
+
+.searchContentDiv {
+  display: flex;
+  flex-direction: row;
+}
+
 h2 {
+  margin: 0px;
   padding-right: 17px;
   font-family: "Lilita One", sans-serif;
-  font-size: 40px;
+
 }
 
 a {
@@ -162,7 +182,7 @@ a {
 
 .result:hover {
   background-color: #ededed;
-  transform: scale(1.05);
+  transform: scale(1.025);
 }
 
 .result p {
@@ -220,6 +240,10 @@ a {
     padding-top: 150px;
     width: 40%;
     
+  }
+  #searchPfp {
+    width: 50px;
+    height: 50px;
   }
 }
 
