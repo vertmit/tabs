@@ -8,6 +8,10 @@ function addDiv(content, discription, index) {
   linkDiv.class = "linkDiv";
   link.appendChild(linkDiv);
   
+  const nameDiv = document.createElement("div");
+  nameDiv.classList.add("nameDiv");
+  linkDiv.appendChild(nameDiv);
+
   const contentDiv = document.createElement('div');
   contentDiv.classList.add("searchContentDiv");
   linkDiv.appendChild(contentDiv);
@@ -18,13 +22,13 @@ function addDiv(content, discription, index) {
   const profilePic = document.createElement("img");
   profilePic.src = "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg";
   profilePic.id = "searchPfp"
-  contentDiv.appendChild(profilePic);
+  nameDiv.appendChild(profilePic);
   
   const textDiv = document.createElement('div');
 
   const title = document.createElement('h3');
   title.textContent = content;
-  textDiv.appendChild(title);
+  nameDiv.appendChild(title);
 
   let descriptionText = discription;
   if (descriptionText.length > 100) {
@@ -34,8 +38,12 @@ function addDiv(content, discription, index) {
   const description = document.createElement('p');
   description.textContent = descriptionText;
 
+  
+
   textDiv.appendChild(description);
   contentDiv.appendChild(textDiv);
+  
+
   
   newDiv.appendChild(link);
   document.getElementById('results').appendChild(newDiv);

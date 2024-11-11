@@ -133,8 +133,8 @@ input#topSearch:focus  {
 #searchPfp {
   border-radius: 7px;
   margin: 10px;
-  width: 200px;
-  height: 200px;
+  width: 50px;
+  height: 50px;
 }
 
 .searchContentDiv {
@@ -152,6 +152,12 @@ h2 {
 a {
   text-decoration: none;
    color: black;
+}
+
+
+.nameDiv {
+  display: flex;
+  flex-direction: row;
 }
 
 #results {
@@ -189,7 +195,7 @@ a {
   font-size: 20px;
   padding-bottom: 10px;
   padding-inline: 10px;
-  margin-bottom: 0px;
+  margin: 0px;
 }
 
 .result h3 {
@@ -228,7 +234,7 @@ a {
 
 @media screen and (max-width: 655px) {
   .result h3 {
-    font-size: 30px;
+    font-size: 40px;
   }
   .result p {
     font-size: 15px;
@@ -242,8 +248,8 @@ a {
     
   }
   #searchPfp {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
   }
 }
 
