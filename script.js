@@ -1,7 +1,5 @@
 searchInput = document.getElementById('search');
 
-console.log("hello");
-
 document.getElementById("mainSearch").addEventListener("submit", function(event) {
   event.preventDefault();
 });
