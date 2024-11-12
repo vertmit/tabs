@@ -3,6 +3,23 @@ html, body {
     margin:0;
 }
 
+#titleDiv {
+    top: 30px;
+    margin-top: 20px;
+    width: 100%;
+    border-bottom: 4px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#pfp {
+    width: 75px;
+    height: 75px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
 #profileDiv {
     padding: 0px;
     position: absolute;
@@ -21,7 +38,6 @@ html, body {
     margin-top: 10px;
     margin-bottom: 5px;
     text-align: center;
-    border-bottom: 4px solid black;
     font-size: 60px;
 }
 
@@ -78,7 +94,7 @@ html, body {
     transition:0.3s;
 }
 .profileOther:hover {
-    transform: scale(1.08);
+    transform: scale(1.02);
 }
 
 @media screen and (max-width: 900px) {

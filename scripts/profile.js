@@ -61,13 +61,26 @@ function calculateAge(day, month, year) {
 
 
 if (people.length > id-1) {
-    
+    const titleDiv = document.createElement("div");
+    titleDiv.id = "titleDiv";
+
+    profileContent.appendChild(titleDiv);
+
+    const profilePic = document.createElement("img");
+    if ("Male" === people[id][2]["gender"]){
+        profilePic.src = "images/pfp/maleplaceholder.png";
+    } else {
+        profilePic.src = "images/pfp/femaleplaceholder.png";
+    }
+    profilePic.id = "pfp"
+    titleDiv.appendChild(profilePic);
+
     document.title = "Tabs Profile - "+people[id][0];
     const title = document.createElement("h1");
 
     title.textContent = people[id][0];
     title.id = "profileName";
-    profileContent.appendChild(title);
+    titleDiv.appendChild(title);
 
     const description = document.createElement("p");
     description.textContent = people[id][1];
