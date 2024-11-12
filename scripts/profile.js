@@ -70,7 +70,7 @@ if (people.length > id-1) {
     if ("Male" === people[id][2]["gender"]){
         profilePic.src = "images/pfp/m"+id%10+".jpeg";
     } else {
-        profilePic.src = "images/pfp/femaleplaceholder.png";
+        profilePic.src = "images/pfp/f"+id%10+".jpeg";
     }
     profilePic.id = "pfp"
     titleDiv.appendChild(profilePic);
