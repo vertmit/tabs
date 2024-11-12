@@ -21,7 +21,7 @@ function addDiv(content, discription, index, gender) {
     
     const profilePic = document.createElement("img");
     if (gender === "Male"){
-        profilePic.src = "images/pfp/maleplaceholder.png";
+        profilePic.src = "images/pfp/m"+index%10+".jpeg";
     } else {
         profilePic.src = "images/pfp/femaleplaceholder.png";
     }

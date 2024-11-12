@@ -68,7 +68,7 @@ if (people.length > id-1) {
 
     const profilePic = document.createElement("img");
     if ("Male" === people[id][2]["gender"]){
-        profilePic.src = "images/pfp/maleplaceholder.png";
+        profilePic.src = "images/pfp/m"+id%10+".jpeg";
     } else {
         profilePic.src = "images/pfp/femaleplaceholder.png";
     }
