@@ -11,13 +11,13 @@ function selectText(element) {
 }
 
 document.getElementById("topSearchForm").addEventListener("submit", function(event) {
-  event.preventDefault();
+    event.preventDefault();
 });
 
 topSearchInput.addEventListener('keyup', (event) => {
-  if (event.key === 'Enter') {
-    const searchQuery = topSearchInput.value;
-    window.location.href = `search?q=${searchQuery}`;
-  }
-  
+    if (event.key === 'Enter') {
+        const searchQuery = topSearchInput.value;
+        window.location.href = `search?q=${searchQuery}`;
+    }
+    
 });
