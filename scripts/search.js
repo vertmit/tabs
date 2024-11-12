@@ -23,7 +23,7 @@ function addDiv(content, discription, index, gender) {
     if (gender === "Male"){
         profilePic.src = "images/pfp/m"+index%10+".jpeg";
     } else {
-        profilePic.src = "images/pfp/f"+id%10+".jpeg";
+        profilePic.src = "images/pfp/f"+index%10+".jpeg";
     }
     profilePic.id = "searchPfp"
     nameDiv.appendChild(profilePic);
