@@ -1,6 +1,6 @@
 document.title = 'Tabs Search - "'+searchQuery+'"';
 
-function addDiv(content, discription, index) {
+function addDiv(content, discription, index, gender) {
   const link = document.createElement('a');
   link.href = `profile?u=${index}&q=${searchQuery}`;
 
@@ -20,7 +20,11 @@ function addDiv(content, discription, index) {
   newDiv.classList.add('result');
   
   const profilePic = document.createElement("img");
-  profilePic.src = "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg";
+  if (gender === "Male"){
+    profilePic.src = "images/pfp/maleplaceholder.png";
+  } else {
+    profilePic.src = "images/pfp/femaleplaceholder.png";
+  }
   profilePic.id = "searchPfp"
   nameDiv.appendChild(profilePic);
   

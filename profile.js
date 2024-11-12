@@ -7,11 +7,11 @@ let otherDivs = [];
 function addDiv(title, content="") {
   
   const Div = document.createElement("div");
-    Div.classList.add("profileOther");
+  Div.classList.add("profileOther");
   
   const h3 = document.createElement("h3");
   h3.textContent = title;
-    Div.appendChild(h3);
+  Div.appendChild(h3);
   if (content) {
     const p = document.createElement("p");
     p.textContent = content;
@@ -61,14 +61,13 @@ function calculateAge(day, month, year) {
 
 
 if (people.length > id-1) {
-  console.log("that's me");
+  
   document.title = "Tabs Profile - "+people[id][0];
-  console.log("that's me");
   const title = document.createElement("h1");
+
   title.textContent = people[id][0];
   title.id = "profileName";
   profileContent.appendChild(title);
-  console.log("that's me");
 
   const description = document.createElement("p");
   description.textContent = people[id][1];
