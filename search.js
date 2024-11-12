@@ -78,7 +78,7 @@ for (let value of people) {
 possibleResults.sort((a, b) => b[1]-a[1]);
 
 for (let person of possibleResults) {
-  addDiv(people[person[0]][0], people[person[0]][1], person[0]);
+  addDiv(people[person[0]][0], people[person[0]][1], person[0], people[person[0]][2]["gender"]);
 }
 
 if (!resultsPlaced) {
