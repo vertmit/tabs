@@ -92,9 +92,11 @@ html, body {
     margin:10px;
     width:100%;
     transition:0.3s;
+    filter: drop-shadow(8px 8px);
 }
 .profileOther:hover {
     transform: scale(1.02);
+    filter: drop-shadow(12px 12px);
 }
 
 @media screen and (max-width: 900px) {
