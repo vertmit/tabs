@@ -96,7 +96,7 @@ html, body {
 }
 .profileOther:hover {
     transform: scale(1.02);
-    filter: drop-shadow(12px 12px);
+    filter: drop-shadow(10px 10px);
 }
 
 @media screen and (max-width: 900px) {
