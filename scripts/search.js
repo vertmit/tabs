@@ -20,11 +20,7 @@ function addDiv(content, discription, index, gender) {
     newDiv.classList.add('result');
     
     const profilePic = document.createElement("img");
-    if (gender === "Male"){
-        profilePic.src = "images/pfp/m"+index%10+".jpeg";
-    } else {
-        profilePic.src = "images/pfp/f"+index%10+".jpeg";
-    }
+    profilePic.src = people[index]["pfp"];
     profilePic.id = "searchPfp"
     nameDiv.appendChild(profilePic);
     
@@ -53,18 +49,17 @@ function addDiv(content, discription, index, gender) {
     document.getElementById('results').appendChild(newDiv);
 }
 
-
-
 let resultsPlaced = false;
 let index = 0;
 let possibleResults = [];
 for (let value of people) {
-    if (value[0].toLowerCase().includes(searchQuery.toLowerCase())) {
+    let name = value["name"];
+    if (name.toLowerCase().includes(searchQuery.toLowerCase())) {
         resultsPlaced = true;
-        if (value[0].toLowerCase().startsWith(searchQuery)) {
+        if (name.toLowerCase().startsWith(searchQuery)) {
             possibleResults.push([index, 2])
         }
-        else if (value[0].split(" ")[1].toLowerCase().startsWith(searchQuery)) {
+        else if (name.split(" ")[1].toLowerCase().startsWith(searchQuery)) {
             possibleResults.push([index, 1])
         } 
         else {
@@ -78,7 +73,7 @@ for (let value of people) {
 possibleResults.sort((a, b) => b[1]-a[1]);
 
 for (let person of possibleResults) {
-    addDiv(people[person[0]][0], people[person[0]][1], person[0], people[person[0]][2]["gender"]);
+    addDiv(people[person[0]]["name"], people[person[0]]["dis"], person[0], people[person[0]]["otherinfo"]["gender"]);
 }
 
 if (!resultsPlaced) {
@@ -103,4 +98,9 @@ if (!resultsPlaced) {
     newDiv.appendChild(frown);
 
     document.getElementById('results').appendChild(newDiv);
+}
+else {
+    const resultUnderPadding = document.createElement("div");
+    resultUnderPadding.id = "resultsunder";
+    document.getElementById('results').appendChild(resultUnderPadding);
 }

@@ -59,6 +59,11 @@ function calculateAge(day, month, year) {
         return age;
 }
 
+function formateBirthdaybirthdate(birthdate) {
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let numends = ["th","st", "nd", "rd", "th", "th", "th", "th", "th", "th"]
+    return "The "+birthdate[0]+numends[birthdate[0]%10]+" of "+months[birthdate[1]-1]+", "+birthdate[2];
+}
 
 if (people.length > id-1) {
     const titleDiv = document.createElement("div");
@@ -67,58 +72,60 @@ if (people.length > id-1) {
     profileContent.appendChild(titleDiv);
 
     const profilePic = document.createElement("img");
-    if ("Male" === people[id][2]["gender"]){
-        profilePic.src = "images/pfp/m"+id%10+".jpeg";
-    } else {
-        profilePic.src = "images/pfp/f"+id%10+".jpeg";
-    }
+    profilePic.src = people[id]["pfp"];
+
     profilePic.id = "pfp"
     titleDiv.appendChild(profilePic);
 
-    document.title = "Tabs Profile - "+people[id][0];
+    document.title = "Tabs Profile - "+people[id]["name"];
     const title = document.createElement("h1");
 
-    title.textContent = people[id][0];
+    title.textContent = people[id]["name"];
     title.id = "profileName";
     titleDiv.appendChild(title);
 
     const description = document.createElement("p");
-    description.textContent = people[id][1];
+    description.textContent = people[id]["dis"];
     description.id = "profileDes";
     profileContent.appendChild(description);
-
-    
-    let birthdate = people[id][2]["birthdate"]
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let numends = ["th","st", "nd", "rd", "th", "th", "th", "th", "th", "th"]
-    
-    
-    addHeading("Other Information")
-    addDiv("Birthdate", "The "+birthdate[0]+numends[birthdate[0]%10]+" of "+months[birthdate[1]-1]+", "+birthdate[2] + " (" + calculateAge(birthdate[0], birthdate[1], birthdate[2]) + " years)");
-    addDiv("Gender", people[id][2]["gender"]);
-    addDiv("Email", people[id][2]["email"]);
-    addDiv("Phone", people[id][2]["phone"])
-    addDiv("Height", people[id][2]["height"]+" cm")
-    addDiv("Weight", people[id][2]["weight"]+" kg")
-    addDiv("Address", people[id][2]["address"])
-    addDiv("Sexuality", people[id][2]["sexuality"])
-    displayDivs();
-
-    addHeading("Family");
-    addDiv("Mum", people[id][3]["mum"]);
-    addDiv("Dad", people[id][3]["dad"]);
-    for (let brother of people[id][3]["brother"]) {
-        addDiv("Brother", brother);
+    if ("otherinfo" in people[id]){
+        let birthdate = people[id]["otherinfo"]["birthdate"];
+        addHeading("Other Information")
+        if ("birthdate" in people[id]["otherinfo"]) addDiv("Birthdate", formateBirthdaybirthdate(birthdate) + " (" + calculateAge(birthdate[0], birthdate[1], birthdate[2]) + " years)");
+        if ("gender" in people[id]["otherinfo"]) addDiv("Gender", people[id]["otherinfo"]["gender"]);
+        if ("email" in people[id]["otherinfo"]) addDiv("Email", people[id]["otherinfo"]["email"]);
+        if ("phone" in people[id]["otherinfo"]) addDiv("Phone", people[id]["otherinfo"]["phone"])
+        if ("height" in people[id]["otherinfo"]) addDiv("Height", people[id]["otherinfo"]["height"]+" cm")
+        if ("weight" in people[id]["otherinfo"]) addDiv("Weight", people[id]["otherinfo"]["weight"]+" kg")
+        if ("address" in people[id]["otherinfo"]) addDiv("Address", people[id]["otherinfo"]["address"])
+        if ("sexuality" in people[id]["otherinfo"]) addDiv("Sexuality", people[id]["otherinfo"]["sexuality"])
+        displayDivs();
     }
-    for (let sister of people[id][3]["sister"]) {
-        addDiv("Sister", sister);
+    if ("family" in people[id]){
+        
+        if (people[id]["family"] != {}) {
+            addHeading("Family");
+            if ("mum" in people[id]["family"]) addDiv("Mum", people[id]["family"]["mum"]);
+            if ("dad" in people[id]["family"]) addDiv("Dad", people[id]["family"]["dad"]);
+            if ("brother" in people[id]["family"]) {
+                for (let brother of people[id]["family"]["brother"]) {
+                    addDiv("Brother", brother);
+                }
+            }
+            if ("sister" in people[id]["family"]) {
+                for (let sister of people[id]["family"]["sister"]) {
+                    addDiv("Sister", sister);
+                }
+            }
+            displayDivs();
+        }
     }
-    displayDivs();
-
-    addHeading("Interests");
-    
-    for (let interest of people[id][4]) {
-        addDiv(interest);
+    if ("interests" in people[id]) {
+        addHeading("Interests");
+        
+        for (let interest of people[id]["interests"]) {
+            addDiv(interest);
+        } 
     }
     displayDivs();
     

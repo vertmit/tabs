@@ -1,0 +1,18 @@
+:root {
+    --text_colour: black;
+    --bg_colour: white;
+    --hover_colour: #ededed;
+    @media (prefers-color-scheme: dark) { 
+        --text_colour: rgb(214, 214, 214);;
+        --bg_colour: #131313;
+        --hover_colour: #0a0a0a;
+    }
+}
+
+html, body {
+    width: 100%;
+    margin:0;
+    background-color: var(--bg_colour);
+    color: var(--text_colour);
+    transition: 0.5s;
+}

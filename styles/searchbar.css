@@ -9,8 +9,8 @@ div#topContainer {
     width: 100%;
     height: 60px;
     justify-content: space-between;
-    background-color: white;
-    border-bottom: 4px solid black;
+    background-color: var(--bg_colour);
+    border-bottom: 4px solid var(--text_colour);
     margin: 0px;
     padding-inline: 15px;
 }
@@ -26,15 +26,16 @@ input#topSearch {
     min-width: 250px;
 
     border-radius: 65px;
-    border: 4px solid black; 
+    border: 4px solid var(--text_colour); 
     padding-inline: 15px;
 
-    
+    background-color: var(--bg_colour);
+    color: var(--text_colour);
 }
 
 input#topSearch::selection { 
-    background: black;
-    color: white; 
+    background: var(--text_colour);
+    color: var(--bg_colour); 
 }
 
 form#topSearchForm {
@@ -61,5 +62,5 @@ h2 {
 
 a {
     text-decoration: none;
-     color: black;
+    color: var(--text_colour);
 }
