@@ -92,7 +92,6 @@ h2 {
     margin-block: auto;
     padding-right: 17px;
     font-family: "Lilita One", sans-serif;
-
 }
 
 a {
@@ -103,4 +102,44 @@ a {
     margin: 0px;
     margin-left: 10px;
     text-decoration: none;
+}
+
+@media screen and (max-width: 600px) {
+    #searchbox {
+        width: calc(100% - 126px);
+    }
+
+    div#topContainer {
+        height: 50px;
+    }
+
+    h2 {
+        font-size: 25px;
+    }
+
+    #searchbox {
+        margin-left: 60px;
+        border-radius: 19px;
+    }
+    
+    input#topSearch {
+        padding-inline: 15px;
+        font-size: 15px;
+        height: 30px;
+    }
+
+    .suggestion {
+        padding-inline: 15px;
+        height: 30px;
+        font-size: 15px;
+        border-radius: 10px;
+    }
+
+    .suggestionIcon {
+        height: 15px;
+        width: 15px;
+        margin-top: 13px;
+        margin-bottom: 16px;
+    }
+    
 }
