@@ -131,6 +131,10 @@
         width:40%;
     }
 
+    .profileOther {
+        width:95%;
+    }
+
     .profileOther:hover {
         transform: scale(1.02);
     }

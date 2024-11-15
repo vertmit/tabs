@@ -12,6 +12,9 @@ searchInput.addEventListener('keyup', (event) => {
 });
 
 const input = document.getElementById('search');
+const searchbardiv = document.getElementById('searchdiv');
+
+const title = document.getElementById('logo');
 
 const searchdiv = document.getElementById("suggestionsbox");
 let suggestions = document.getElementById("suggestions");
@@ -66,15 +69,50 @@ input.addEventListener('input', () => {
 });
 
 
-searchdiv.style.display = 'block';
+function detectMob() {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+    
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
+}
+
+var mobile = detectMob();
+
+if (mobile){
+    input.blur()
+}
+else {
+    searchdiv.style.display = 'block';
+}
 input.addEventListener('focus', () => {
     searchdiv.style.display = 'block';
+    if (mobile) {
+        searchbardiv.classList.add("searchtop");
+        title.style.display = "none";
+    }
 });
 
 searchdiv.addEventListener('mousedown', (event) => {
     event.preventDefault();
+    if (mobile) {
+        searchbardiv.classList.add("searchtop");
+        title.style.display = "none";
+    }
 });
 
 input.addEventListener('blur', () => {
     searchdiv.style.display = 'none';
+    if (mobile) {
+        searchbardiv.classList.remove("searchtop");
+        title.style.display = "block";
+    }
 });

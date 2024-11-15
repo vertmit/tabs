@@ -7,6 +7,7 @@ h1#logo {
 }
 
 #searchdiv {
+    min-width: 500px;
     width: 75%;
     max-width: 1000px;
     border: 4px solid var(--text_colour); 
@@ -14,6 +15,14 @@ h1#logo {
     
     padding-bottom: 5px;
     box-sizing: border-box;
+}
+
+.searchtop {
+    z-index: 10;
+    width: 100%;
+    position:absolute;
+    margin:0px;
+    border-radius: 5px;
 }
 
 .suggestion {
@@ -95,7 +104,7 @@ input#search {
     align-items: center;
     margin: 0;
     height: 75%;
-    min-width: 500px;
+    width: 100%;
 }
 
 @media screen and (max-width: 655px) {
@@ -110,6 +119,7 @@ input#search {
     #searchdiv {
         border-radius: 27px;
     }
+    
     .suggestion {
         padding-inline: 15px;
         height: 30px;
@@ -120,7 +130,10 @@ input#search {
     h1#logo {
         font-size: 75px;
     }
-    .container {
-        margin-top:100px;
+    .searchtop {
+        z-index: 10;
+        position:absolute;
+        margin:0px;
+        border-radius: 5px;
     }
 }
