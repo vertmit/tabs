@@ -85,7 +85,7 @@ function detectMob() {
     });
 }
 
-var mobile = detectMob();
+var mobile = !detectMob();
 
 if (mobile){
     input.blur()
