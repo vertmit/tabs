@@ -38,8 +38,6 @@ function addDiv(content, discription, index, gender) {
     const description = document.createElement('p');
     description.textContent = descriptionText;
 
-    
-
     textDiv.appendChild(description);
     contentDiv.appendChild(textDiv);
     
