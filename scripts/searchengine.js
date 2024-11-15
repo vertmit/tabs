@@ -1,4 +1,3 @@
-console.log("loaded");
 function searchForQuery(query){
     let possibleResults = [];
     for (let value of people) {

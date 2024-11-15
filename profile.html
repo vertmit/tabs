@@ -19,9 +19,14 @@
 <body>
     <div id="topContainer">
         <h2><a href="/tabs">Tabs</a></h2>
-        <form id="topSearchForm">
-            <input type="text" id="topSearch" placeholder="Search Tabs" spellcheck="false" onfocus="selectText(this)">
-        </form>
+        <div id="searchbox">
+            <form id="topSearchForm">
+                <input type="text" id="topSearch" placeholder="Search Tabs" spellcheck="false" autocomplete="off">
+            </form>
+            <div id="suggestionsbox">
+                <div id="suggestions"></div>
+            </div>
+        </div>
     </div>
     <div id="profileDiv"></div>
     
