@@ -2,7 +2,7 @@ const topSearchInput = document.getElementById('topSearch');
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const searchQuery = urlParams.get('q');
+const searchQuery = decodeURIComponent(urlParams.get('q'));
 
 topSearchInput.value = searchQuery;
 
