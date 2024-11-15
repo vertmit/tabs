@@ -36,7 +36,7 @@ input.addEventListener('input', () => {
             const link = document.createElement("a");
 
             // Ensure spaces are properly encoded in the URL
-            link.href = `search?q=${encodeURIComponent(text).replace(" ", "+")}`; // Replaces %20 with +
+            link.href = `search?q=${encodeURIComponent(text)}`; // Replaces %20 with +
 
             const suggestionText = document.createElement("p");
             suggestionText.textContent = text;
