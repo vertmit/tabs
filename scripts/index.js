@@ -25,35 +25,42 @@ input.addEventListener('input', () => {
 
     if (input.value !== "") {
         let results = searchForQuery(input.value);
-        for (let i = 0; i < 8; i++) {
-            let text = results[i][0];
-            if (!text) {
-                break;
-            }
-            const suggestion = document.createElement("div");
-            suggestion.classList.add("suggestion");
-            const suggestionIcon = document.createElement("img");
-            if (results[i][1] == 1) {
-                suggestionIcon.src = "images/icons/user.png";
-            } else {
-                suggestionIcon.src = "images/icons/search.png";
-            }
-            suggestionIcon.classList.add("suggestionIcon");
+        if (results.length > 0) {
+            for (let i = 0; i < 8; i++) {
+                let text = results[i][0];
+                if (!text) {
+                    break;
+                }
+                const suggestion = document.createElement("div");
+                suggestion.classList.add("suggestion");
+                if (i === 7 || i === results.length-1) {
+                    console.log("done");
+                    suggestion.id = "bottom";
+                }
+                const suggestionIcon = document.createElement("img");
+                if (results[i][1] == 1) {
+                    suggestionIcon.src = "images/icons/user.png";
+                } else {
+                    suggestionIcon.src = "images/icons/search.png";
+                }
+                suggestionIcon.classList.add("suggestionIcon");
 
-            suggestion.appendChild(suggestionIcon);
+                suggestion.appendChild(suggestionIcon);
 
-            const link = document.createElement("a");
-            if (results[i][1] == 1) {
-                link.href = `profile?q=${encodeURIComponent(input.value)}&u=${encodeURIComponent(results[i][2])}`;
-            } else {
-                link.href = `search?q=${encodeURIComponent(text)}`;
+                const link = document.createElement("a");
+                if (results[i][1] == 1) {
+                    link.href = `profile?q=${encodeURIComponent(input.value)}&u=${encodeURIComponent(results[i][2])}`;
+                } else {
+                    link.href = `search?q=${encodeURIComponent(text)}`;
+                }
+
+                const suggestionText = document.createElement("p");
+                suggestionText.textContent = text;
+                suggestion.appendChild(suggestionText);
+                link.appendChild(suggestion);
+                suggestions.appendChild(link);
             }
-
-            const suggestionText = document.createElement("p");
-            suggestionText.textContent = text;
-            suggestion.appendChild(suggestionText);
-            link.appendChild(suggestion);
-            suggestions.appendChild(link);
+            
         }
     }
 });

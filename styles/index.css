@@ -12,7 +12,8 @@ h1#logo {
     border: 4px solid var(--text_colour); 
     border-radius: 40px;
     
-    padding-bottom: 5px;;
+    padding-bottom: 5px;
+    box-sizing: border-box;
 }
 
 .suggestion {
@@ -47,9 +48,6 @@ a {
     text-decoration: none;
     color: var(--text_colour);
 }
-
-
-
 
 .suggestion:hover {
     background-color: var(--hover_colour);
