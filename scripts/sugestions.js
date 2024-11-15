@@ -6,14 +6,14 @@ function searchForQuery(query){
         let name = value["name"];
         if (name.toLowerCase().includes(query.toLowerCase())) {
             resultsPlaced = true;
-            if (name.toLowerCase().startsWith(query)) {
+            if (name.toLowerCase().startsWith(query.toLowerCase())) {
                 possibleResults.push([[name, index], 2])
                 let word = name.split(" ")[0];
                 if (!suggestions.includes(word)){
                     suggestions.push(word);
                 }
             }
-            else if (name.split(" ")[1].toLowerCase().startsWith(query)) {
+            else if (name.split(" ")[1].toLowerCase().startsWith(query.toLowerCase())) {
                 possibleResults.push([[name, index], 1]);
                 let word = name.split(" ")[1];
                 if (!suggestions.includes(word)) {
@@ -21,7 +21,7 @@ function searchForQuery(query){
                 }
             } 
             else {
-                possibleResults.push([name, 0]);
+                possibleResults.push([[name, index], 0]);
             }
             
         }
