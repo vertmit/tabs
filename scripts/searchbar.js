@@ -23,7 +23,7 @@ const input = document.getElementById('topSearch');
 const searchdiv = document.getElementById("suggestionsbox");
 let suggestions = document.getElementById("suggestions");
 input.addEventListener('input', () => {
-    
+
     suggestions.remove();
 
     suggestions = document.createElement("div");
@@ -33,18 +33,28 @@ input.addEventListener('input', () => {
     if (input.value !== "") {
         let results = searchForQuery(input.value);
         for (let i = 0; i < 8; i++) {
-            console.log(results[i])
-            let text = results[i];
+            let text = results[i][0];
             if (!text) {
                 break;
             }
             const suggestion = document.createElement("div");
             suggestion.classList.add("suggestion");
+            const suggestionIcon = document.createElement("img");
+            if (results[i][1] == 1) {
+                suggestionIcon.src = "images/icons/user.png";
+            } else {
+                suggestionIcon.src = "images/icons/search.png";
+            }
+            suggestionIcon.classList.add("suggestionIcon");
+
+            suggestion.appendChild(suggestionIcon);
 
             const link = document.createElement("a");
-
-            // Ensure spaces are properly encoded in the URL
-            link.href = `search?q=${encodeURIComponent(text)}`; // Replaces %20 with +
+            if (results[i][1] == 1) {
+                link.href = `profile?q=${encodeURIComponent(input.value)}&u=${encodeURIComponent(results[i][2])}`;
+            } else {
+                link.href = `search?q=${encodeURIComponent(text)}`;
+            }
 
             const suggestionText = document.createElement("p");
             suggestionText.textContent = text;
@@ -54,7 +64,6 @@ input.addEventListener('input', () => {
         }
     }
 });
-
 
 searchdiv.style.display = 'block';
 input.addEventListener('focus', () => {
