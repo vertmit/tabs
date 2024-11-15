@@ -29,10 +29,7 @@ function searchForQuery(query){
     }
 
     possibleResults.sort((a, b) => b[1]-a[1]);
-    let results = [];
-    for (let suggestion of suggestions) {
-        results.push([suggestion, 0]);
-    }
+    let results = suggestions;
     for (let result of possibleResults) {
         results.push([result[0][0], 1, result[0][1]]);
     }
