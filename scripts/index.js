@@ -88,7 +88,9 @@ function detectMob() {
 var mobile = detectMob();
 
 if (mobile){
-    input.blur()
+    input.blur();
+    searchbardiv.id = "mobileSearch"
+    title.id = "mobileLogo"
 }
 else {
     searchdiv.style.display = 'block';
