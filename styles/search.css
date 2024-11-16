@@ -18,7 +18,7 @@
     flex-direction: row;
 }
 
-#results {
+#resultscontainter {
     padding: 0px;
     position: absolute;
     top: 70px;
