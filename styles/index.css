@@ -18,12 +18,13 @@ h1#logo {
 }
 
 .searchtop {
-    z-index: 10;
-    width: 100%;
-    position:absolute;
+    z-index: 10 !important;
+    width: 100% !important;
+    position:absolute !important;
     margin:0px;
-    border-radius: 5px;
-    min-width: 0px;
+    border-radius: 15px !important;
+    min-width: 0px !important;
+    overflow: auto;
 }
 
 .suggestion {
@@ -135,7 +136,6 @@ input#search {
         
         z-index: 10;
         position:absolute;
-        margin:0px;
-        border-radius: 5px;
+        border-radius: 5px !important; 
     }
 }
