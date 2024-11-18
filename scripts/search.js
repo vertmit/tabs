@@ -1,6 +1,6 @@
 document.title = 'Tabs Search - "' + searchQuery + '"';
 
-function addDiv(content, description, index, gender) {
+function addDiv(content, description, index, pri) {
     const link = document.createElement('a');
     link.href = `profile?u=${index}&q=${searchQuery}`;
 
@@ -42,14 +42,13 @@ function addDiv(content, description, index, gender) {
     contentDiv.appendChild(textDiv);
 
     newDiv.appendChild(link);
+    newDiv.id = pri;
     document.getElementById('results').appendChild(newDiv);
 }
 
 let resultsPlaced = false;
 let index = 0;
 let possibleResults = [];
-let resultsPerPage = 10;
-let currentPage = 1;
 
 for (let value of people) {
     let name = value["name"];
@@ -68,24 +67,10 @@ for (let value of people) {
 
 possibleResults.sort((a, b) => b[1] - a[1]);
 
-function loadResults(page) {
-    const start = (page - 1) * resultsPerPage;
-    const end = page * resultsPerPage;
-    const resultsToDisplay = possibleResults.slice(start, end);
-
-    resultsToDisplay.forEach((person) => {
-        addDiv(
-            people[person[0]]["name"],
-            people[person[0]]["dis"],
-            person[0],
-            people[person[0]]["otherinfo"]["gender"]
-        );
-    });
-}
-
 if (resultsPlaced) {
-    loadResults(currentPage);
-    currentPage++;
+    for (let result of possibleResults) {
+        addDiv(people[result[0]]["name"],people[result[0]]["dis"],result[0],people[result[0]]["otherinfo"]["gender"],result[1])
+    }
 } else {
     const newDiv = document.createElement("div");
     newDiv.id = "noResult";
@@ -109,16 +94,3 @@ if (resultsPlaced) {
 
     document.getElementById("results").appendChild(newDiv);
 }
-
-// Infinite scroll implementation
-window.addEventListener("scroll", () => {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
-
-    // If the user has scrolled near the bottom, load more results
-    if (scrollTop + clientHeight >= scrollHeight - 50 && currentPage * resultsPerPage <= possibleResults.length) {
-        loadResults(currentPage);
-        currentPage++;
-    }
-});
