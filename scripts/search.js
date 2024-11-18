@@ -42,7 +42,6 @@ function addDiv(content, description, index, pri) {
     contentDiv.appendChild(textDiv);
 
     newDiv.appendChild(link);
-    newDiv.id = pri;
     document.getElementById('results').appendChild(newDiv);
 }
 
@@ -69,7 +68,8 @@ possibleResults.sort((a, b) => b[1] - a[1]);
 
 if (resultsPlaced) {
     for (let result of possibleResults) {
-        addDiv(people[result[0]]["name"],people[result[0]]["dis"],result[0],people[result[0]]["otherinfo"]["gender"],result[1])
+        console.log(result)
+        addDiv(people[result[0]]["name"],people[result[0]]["dis"],result[0],result[1])
     }
 } else {
     const newDiv = document.createElement("div");
