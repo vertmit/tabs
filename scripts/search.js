@@ -23,8 +23,6 @@ function addDiv(content, description, index) {
     profilePic.src = people[index]["pfp"];
     profilePic.id = "searchPfp";
     nameDiv.appendChild(profilePic);
-    
-    const textDiv = document.createElement('div');
 
     const title = document.createElement('h3');
     title.textContent = content;
@@ -38,8 +36,7 @@ function addDiv(content, description, index) {
     const descriptionElem = document.createElement('p');
     descriptionElem.textContent = descriptionText;
 
-    textDiv.appendChild(descriptionElem);
-    contentDiv.appendChild(textDiv);
+    contentDiv.appendChild(descriptionElem);
 
     newDiv.appendChild(link);
     document.getElementById('results').appendChild(newDiv);
