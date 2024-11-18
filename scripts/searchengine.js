@@ -6,7 +6,7 @@ function getSuggestions(query){
         let name = value["name"];
         if (name.toLowerCase().includes(query.toLowerCase())) {
             resultsPlaced = true;
-            if (name.split(" ")[1].toLowerCase() = query.toLowerCase()) {
+            if (name.split(" ")[1].toLowerCase() === query.toLowerCase()) {
                 possibleResults.push([[name, index], 3])
                 let word = name.split(" ")[1];
                 if (!word in suggestions){
@@ -66,7 +66,7 @@ function search(query) {
         let name = value["name"];
         if (name.toLowerCase().includes(query.toLowerCase())) {
             resultsPlaced = true;
-            if (name.split(" ")[1].toLowerCase() = query.toLowerCase()) {
+            if (name.split(" ")[1].toLowerCase() === query.toLowerCase()) {
                 possibleResults.push([[name, index], 3])
             }
             else if (name.toLowerCase().startsWith(query.toLowerCase())) {
