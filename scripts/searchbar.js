@@ -31,16 +31,18 @@ input.addEventListener('input', () => {
     searchdiv.appendChild(suggestions);
 
     if (input.value !== "") {
-        let results = searchForQuery(input.value);
-        for (let i = 0; i < 8; i++) {
-            let text = results[i][0];
+        let amount = 8;
+        let results = getSuggestions(input.value);
+        results = results.slice(0, amount);
+        for (let result of results) {
+            let text = result[0];
             if (!text) {
                 break;
             }
             const suggestion = document.createElement("div");
             suggestion.classList.add("suggestion");
             const suggestionIcon = document.createElement("img");
-            if (results[i][1] == 1) {
+            if (result[1] == 1) {
                 suggestionIcon.src = "images/icons/user.png";
             } else {
                 suggestionIcon.src = "images/icons/search.png";
@@ -50,8 +52,8 @@ input.addEventListener('input', () => {
             suggestion.appendChild(suggestionIcon);
 
             const link = document.createElement("a");
-            if (results[i][1] == 1) {
-                link.href = `profile?q=${encodeURIComponent(input.value)}&u=${encodeURIComponent(results[i][2])}`;
+            if (result[1] == 1) {
+                link.href = `profile?q=${encodeURIComponent(input.value)}&u=${encodeURIComponent(result[2])}`;
             } else {
                 link.href = `search?q=${encodeURIComponent(text)}`;
             }

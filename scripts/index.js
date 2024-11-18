@@ -66,7 +66,7 @@ function addsuggestions() {
     searchdiv.appendChild(suggestions);
 
     if (input.value !== "" || mobile) {
-        let results = searchForQuery(input.value);
+        let results = getSuggestions(input.value);
         if (results.length > 0) {
             let amount = 8;
             if (mobile) {

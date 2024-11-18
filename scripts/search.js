@@ -1,6 +1,6 @@
 document.title = 'Tabs Search - "' + searchQuery + '"';
 
-function addDiv(content, description, index, pri) {
+function addDiv(content, description, index) {
     const link = document.createElement('a');
     link.href = `profile?u=${index}&q=${searchQuery}`;
 
@@ -66,10 +66,12 @@ for (let value of people) {
 
 possibleResults.sort((a, b) => b[1] - a[1]);
 
+possibleResults = search(searchQuery);
+
 if (resultsPlaced) {
     for (let result of possibleResults) {
-        console.log(result)
-        addDiv(people[result[0]]["name"],people[result[0]]["dis"],result[0],result[1])
+        
+        addDiv(people[result[2]]["name"],people[result[2]]["dis"],result[2])
     }
 } else {
     const newDiv = document.createElement("div");
