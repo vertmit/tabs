@@ -1,3 +1,9 @@
+const imagePreloadSearch = document.createElement("img");
+imagePreloadSearch.src = "images/icons/search.png"
+
+const imagePreloadProfile = document.createElement("img");
+imagePreloadProfile.src = "images/icons/user.png"
+
 const input = document.getElementById('search');
 const searchbardiv = document.getElementById('searchdiv');
 
