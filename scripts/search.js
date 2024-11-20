@@ -1,4 +1,3 @@
-
 document.title = 'Tabs Search - "' + searchQuery + '"';
 
 function addDiv(content, description, index) {
