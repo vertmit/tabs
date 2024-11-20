@@ -131,7 +131,7 @@ input.addEventListener('focus', () => {
     if (mobile) {
         searchContent.classList.add("searchtop")
         searchbardiv.classList.add("searchtop");
-        title.style.display = "none";
+        title.classList.add("titleout");
     }
 });
 
@@ -140,7 +140,7 @@ searchdiv.addEventListener('mousedown', (event) => {
     if (mobile) {
         searchbardiv.classList.add("searchtop");
         searchContent.classList.add("searchtop")
-        title.style.display = "none";
+        title.classList.add("titleout");
     }
 });
 
@@ -149,6 +149,6 @@ input.addEventListener('blur', () => {
     if (mobile) {
         searchbardiv.classList.remove("searchtop");
         searchContent.classList.remove("searchtop")
-        title.style.display = "block";
+        title.classList.remove("titleout");
     }
 });
