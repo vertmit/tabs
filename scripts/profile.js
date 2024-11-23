@@ -3,8 +3,38 @@ const id = Number(urlParams.get('u'));
 const profileContent = document.createElement("div");
 profileContent.id = "pContent";
 
+enlarged = document.getElementById("enlarged")
+enlargedp = document.getElementById("enlargedp")
+enlargedh3 = document.getElementById("enlargedh3")
+enlargedpfp = document.getElementById("enlargedpfp")
+enlargedclose = document.getElementById("enlargedclose")
+
+function closeEnlarged() {
+    enlarged.classList.remove("show");
+    
+    enlarged.classList.add("bye");
+    sleep(100).then(() => { enlarged.classList.remove("bye"); showing=false; enlarged.classList.remove("pfp");});
+}
+
+enlargedclose.addEventListener("click", function() {
+    closeEnlarged();
+})
+
+let disappear = false;
+let showing = false;
+
+document.addEventListener('click', function(event) {
+    if (!enlarged.contains(event.target) && disappear && showing) {
+        closeEnlarged();
+    }
+});
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 let otherDivs = [];
-function addDiv(title, content="") {
+function addDiv(title, content="", backcontent="") {
     
     const Div = document.createElement("div");
     Div.classList.add("profileOther");
@@ -17,7 +47,26 @@ function addDiv(title, content="") {
         p.textContent = content;
         p.classList.add("profiletabp");
         Div.appendChild(p);
+        
     }
+    Div.addEventListener('click', (event) => {
+        if (showing) {
+            closeEnlarged();
+            sleep(200).then(() => { 
+                sleep(10).then(() => {enlarged.classList.add("show");})
+                showing = true;
+                enlargedp.textContent = content;
+                enlargedh3.textContent = title;
+            });
+        } else {
+            disappear = false;
+            sleep(100).then(() => { disappear = true; });
+            enlarged.classList.add("show");
+            enlargedp.textContent = content;
+            enlargedh3.textContent = title;
+        }
+        showing=true;
+    });
     otherDivs.push(Div);
 }
 
@@ -72,10 +121,38 @@ if (people.length > id-1) {
     profileContent.appendChild(titleDiv);
 
     const profilePic = document.createElement("img");
-    profilePic.src = people[id]["pfp"];
+    if ("pfp" in people[id]) {
+        profilePic.src = people[id]["pfp"];
+    } else {
+        if (people[id]["gender"] === "male") profilePic.src = "images/pfp/maleplaceholder.png";
+        else if (people[id]["gender"] === "female") profilePic.src = "images/pfp/femaleplaceholder.png";
+    }
 
     profilePic.id = "pfp"
+    profilePic.alt = people[id]["name"]+"'s Profile Picture"
     titleDiv.appendChild(profilePic);
+    enlargedpfp.src = people[id]["pfp"];
+
+    profilePic.addEventListener("click", function(event) {
+        if (showing) {
+            closeEnlarged();
+            sleep(200).then(() => { 
+                disappear = true;
+                enlarged.classList.add("pfp");
+                sleep(10).then(() => {enlarged.classList.add("show");})
+                showing = true;
+                
+            });
+        } else {
+            disappear = false;
+            sleep(100).then(() => { disappear = true; showing = true;});
+            enlarged.classList.add("show");
+            enlarged.classList.add("pfp");
+            enlargedp.textContent = content;
+            enlargedh3.textContent = title;
+        }
+        showing = true;
+    });
 
     document.title = "Tabs Profile - "+people[id]["name"];
     const title = document.createElement("h1");

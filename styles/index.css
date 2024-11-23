@@ -4,6 +4,8 @@
     font-size: 125px;
     margin-bottom: 10px;
     transition: 500ms;
+
+    z-index: 0 !important;
 }
 
 #searchdiv {
@@ -19,7 +21,12 @@
     transition: transform 2s ease-in-out;
 }
 
+.titleout {
+    color: transparent;
+}
+
 #mobileSearch {
+    background-color: var(--bg_colour);
     margin-inline: auto;
     transition: 0.5s;
     min-width: 0px;
@@ -32,7 +39,7 @@
     box-sizing: border-box;
     
     position: absolute;
-    z-index: 1;
+    z-index: 10 !important;
 }
 
 #titleDiv {
