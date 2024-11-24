@@ -121,7 +121,7 @@
     border: 4px solid transparent;
     background-color: transparent;
     color: var(--text_colour);
-
+    
     text-align: center;
     position: fixed;
     top: 50%;
@@ -142,13 +142,14 @@
 #enlargedpfp {
     display: none;
     aspect-ratio: 1;
-    width: 500px;
+    width: 600px;
 }
 
 #enlarged.pfp {
+    padding-inline: 0px;
     width: fit-content !important;
     #enlargedclose {
-        background-color: var(--text_colour);
+        background-color: white;
     }
     
     #enlargedpfp {
@@ -211,18 +212,12 @@
 }
 
 @media screen and (max-width: 655px) {
-
-    #enlargedpfp {
-        aspect-ratio: 1;
-        width: 250px;
-    }
-
     #enlargedclose {
         width: 20px;
         height: 20px;
     }
     #enlargedp {
-        font-size: 20px;
+        font-size: 30px;
     }
 
     #enlargedh3 {
@@ -259,4 +254,20 @@
     #pContent {
         margin-inline: 20px;
     }
+}
+
+@media screen and (max-width: 800px) {
+    #enlargedpfp {
+        aspect-ratio: 1;
+        width: 400px;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+    #enlargedpfp {
+        aspect-ratio: 1;
+        width: 300px;
+    }
+
 }
