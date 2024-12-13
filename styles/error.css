@@ -1,0 +1,31 @@
+#error {
+    position: absolute;
+    top: 70px;
+
+    font-family: "Lilita One", sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#error h2 {
+    font-size: 70px;
+    margin: 0px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    padding:0px;
+    margin-inline: auto;
+}
+#error h3 {
+    font-size: 30px;
+    margin: 0px;
+    margin-inline: auto;
+    margin-bottom: 10px;
+}
+#error div {
+    text-align: center;
+    font-size: 20px;
+}

@@ -8,8 +8,12 @@ const topSearchInput = document.getElementById('topSearch');
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const searchQuery = decodeURIComponent(urlParams.get('q'));
+const qsearch = urlParams.get('q');
+let searchQuery = ""
 
+if (qsearch !== null){
+    searchQuery = decodeURIComponent(urlParams.get('q'));
+}
 topSearchInput.value = searchQuery;
 
 document.getElementById("topSearchForm").addEventListener("submit", function(event) {
@@ -28,6 +32,10 @@ const input = document.getElementById('topSearch');
 
 const searchdiv = document.getElementById("suggestionsbox");
 let suggestions = document.getElementById("suggestions");
+
+let usericon = "images/icons/user.png";
+let suggestionicon = "images/icons/search.png"
+
 input.addEventListener('input', () => {
 
     suggestions.remove();
@@ -49,9 +57,9 @@ input.addEventListener('input', () => {
             suggestion.classList.add("suggestion");
             const suggestionIcon = document.createElement("img");
             if (result[1] == 1) {
-                suggestionIcon.src = "images/icons/user.png";
+                suggestionIcon.src = usericon;
             } else {
-                suggestionIcon.src = "images/icons/search.png";
+                suggestionIcon.src = suggestionicon;
             }
             suggestionIcon.classList.add("suggestionIcon");
 

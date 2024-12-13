@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs - Add Profile</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles/modechanger.css">
+    <link rel="stylesheet" href="styles/searchbar.css">
+    <link rel="stylesheet" href="styles/add.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&family=Lilita+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="topContainer">
+        <h2><a href="/tabs">Tabs</a></h2>
+        <div id="searchbox">
+            <form id="topSearchForm">
+                <input type="text" id="topSearch" placeholder="Search Tabs" spellcheck="false" autocomplete="off">
+            </form>
+            <div id="suggestionsbox">
+                <div id="suggestions"></div>
+            </div>
+        </div>
+    </div>
+    <div id="addarea">
+        <div id="name">
+            <img src="images/pfp/maleplaceholder.png" alt="pfp" id="pfp">
+            <div contenteditable="true" id="nameInput" class="placeholder">John Doe</div>
+        </div>
+        <div id="profilecontent">
+            <div contenteditable="true" id="descriptionInput"></div>
+        <div>
+    </div>
+    
+    <script src="scripts/add.js"></script>
+    <script src="scripts/data.js"></script>
+    <script src="scripts/searchengine.js"></script>
+    <script src="scripts/searchbar.js"></script>
+</body>
+</html>

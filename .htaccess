@@ -3,3 +3,16 @@ DirectoryIndex index.html
 RewriteEngine On
 RewriteRule ^search$ /search.html
 RewriteRule ^profile$ /profile.html
+RewriteRule ^add$ /add.html
+
+ErrorDocument 400 .errors/400.html
+ErrorDocument 401 .errors/401.html
+ErrorDocument 403 .errors/403.html
+ErrorDocument 404 .errors/404.html
+ErrorDocument 405 .errors/405.html
+ErrorDocument 408 .errors/408.html
+ErrorDocument 429 .errors/429.html
+ErrorDocument 500 .errors/500.html
+ErrorDocument 502 .errors/502.html
+ErrorDocument 503 .errors/503.html
+ErrorDocument 504 .errors/504.html
