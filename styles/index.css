@@ -137,6 +137,19 @@ input#search {
     color: var(--text_colour);
 }
 
+#searchbar {
+    display: flex;
+    align-items: center;
+}
+
+#addbutton {
+    filter: var(--invert_amount);
+    width: 30px;
+    height: 30px;
+    padding-right: 20px;
+}
+
+
 #search:focus::placeholder {
     opacity: 0;
 }

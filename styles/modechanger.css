@@ -3,11 +3,14 @@
     --bg_colour: white;
     --hover_colour: #ededed;
     --invert_amount: invert(0);
+    --opposite_invert: invert(1);
+    --title_font: "Lilita One", sans-serif;
     @media (prefers-color-scheme: dark) { 
         --text_colour: rgb(214, 214, 214);;
         --bg_colour: #131313;
         --hover_colour: #0a0a0a;
         --invert_amount: invert(0.84);
+        --opposite_invert: invert(0.26);
     }
 }
 

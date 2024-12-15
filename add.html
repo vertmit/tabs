@@ -27,13 +27,25 @@
     </div>
     <div id="addarea">
         <div id="name">
-            <img src="images/pfp/maleplaceholder.png" alt="pfp" id="pfp">
-            <div contenteditable="true" id="nameInput" class="placeholder">John Doe</div>
+            <div id="pfpholder">
+                <img src="images/pfp/maleplaceholder.png" alt="pfp" id="pfp">
+                <img src="images/icons/edit.png" alt="edit" id="edit">
+            </div>
+            <div contenteditable="true" id="nameInput" class="placeholder">Profile Name</div>
         </div>
         <div id="profilecontent">
             <div contenteditable="true" id="descriptionInput"></div>
-        <div>
+        </div>
+        <div id="info">
+            <h2 class="profilehead">Other Information</h2>
+            <div class="chipspot" id="otherinfo"></div>
+            <h2 class="profilehead">Family</h2>
+            <div class="chipspot" id="family"></div>
+            <h2 class="profilehead">Interests</h2>
+            <div class="chipspot" id="interests"></div>
+        </div>
     </div>
+    <div id="addbutton">Add Profile</div>
     
     <script src="scripts/add.js"></script>
     <script src="scripts/data.js"></script>
