@@ -141,7 +141,7 @@ input#search {
 }
 
 #searchbar {
-    display: flex;
+    display: block;
     align-items: center;
 }
 
