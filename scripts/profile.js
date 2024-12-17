@@ -70,33 +70,38 @@ function addDiv(title, content="", backcontent="") {
     otherDivs.push(Div);
 }
 
+let numends = ["th","st", "nd", "rd", "th", "th", "th", "th", "th", "th"]
+let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 function formatecalendar(birthdate) {
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let numends = ["th","st", "nd", "rd", "th", "th", "th", "th", "th", "th"]
     return "The "+birthdate[0]+getnumbersuffex(birthdate[0])+" of "+months[birthdate[1]-1]+", "+birthdate[2];
 }
 
 function parsechip(chip) {
-    if (chip.t === "default") {
-        addDiv(chip.h, chip.c)
+    try {
+        if (chip.t === "default") {
+            addDiv(chip.h, chip.c)
+        }
+        else if (chip.t === "birthdate") {
+            addDiv(chip.h, formatecalendar(chip.c)+` (${calculateAge(chip.c[0],chip.c[1],chip.c[2])} years)`)
+        }
+        else if (chip.t === "calendar") {
+            addDiv(chip.h, formatecalendar(chip.c))
+        }
+        else if (chip.t === "length") {
+            addDiv(chip.h, `${chip.c.v} ${chip.c.u}`)
+        }
+        else if (chip.t === "weight") {
+            addDiv(chip.h, `${chip.c.v} ${chip.c.u}`)
+        }
+        else if (chip.t === "family") {
+            addDiv(chip.h, chip.c)
+        }
+        else if (chip.t === "interest") {
+            addDiv(chip.h)
+        }
     }
-    else if (chip.t === "birthdate") {
-        addDiv(chip.h, formatecalendar(chip.c)+` (${calculateAge(chip.c[0],chip.c[1],chip.c[2])} years)`)
-    }
-    else if (chip.t === "calendar") {
-        addDiv(chip.h, formatecalendar(chip.c))
-    }
-    else if (chip.t === "length") {
-        addDiv(chip.h, `${chip.c.v} ${chip.c.u}`)
-    }
-    else if (chip.t === "weight") {
-        addDiv(chip.h, `${chip.c.v} ${chip.c.u}`)
-    }
-    else if (chip.t === "family") {
-        addDiv(chip.h, chip.c)
-    }
-    else if (chip.t === "interest") {
-        addDiv(chip.h)
+    catch (error) {
+        console.log(`Error found preventing a ${chip.t} from creation:\n    `+error)
     }
 }
 

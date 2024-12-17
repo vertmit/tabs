@@ -3,39 +3,44 @@ function getSuggestions(query){
     let suggestions = {};
     let index = 0;
     for (let value of people) {
-        let name = value["n"];
-        if (name.toLowerCase().includes(query.toLowerCase())) {
-            resultsPlaced = true;
-            if (name.split(" ")[1].toLowerCase() === query.toLowerCase()) {
-                possibleResults.push([[name, index], 3])
-                let word = name.split(" ")[1];
-                if (!word in suggestions){
-                    suggestions[word] = 0;
+        try {
+            let name = value["n"];
+            if (name.toLowerCase().includes(query.toLowerCase())) {
+                resultsPlaced = true;
+                const namesplit = name.split(" ")
+                if (namesplit[namesplit.length - 1].toLowerCase() === query.toLowerCase()) {
+                    possibleResults.push([[name, index], 3])
+                    let word = namesplit[namesplit.length - 1]
+                    if (!word in suggestions){
+                        suggestions[word] = 0;
+                    }
+                    suggestions[word]++;
                 }
-                suggestions[word]++;
-            }
-            else if (name.toLowerCase().startsWith(query.toLowerCase())) {
-                possibleResults.push([[name, index], 2])
-                let word = name.split(" ")[0];
-                if (!word in suggestions){
-                    suggestions[word] = 0;
+                else if (name.toLowerCase().startsWith(query.toLowerCase())) {
+                    possibleResults.push([[name, index], 2])
+                    let word = name.split(" ")[0];
+                    if (!word in suggestions){
+                        suggestions[word] = 0;
+                    }
+                    suggestions[word]++;
                 }
-                suggestions[word]++;
-            }
-            else if (name.split(" ")[1].toLowerCase().startsWith(query.toLowerCase())) {
-                possibleResults.push([[name, index], 1]);
-                let word = name.split(" ")[1];
-                if (!word in suggestions) {
-                    suggestions[word] = 0;
+                else if (namesplit[namesplit.length - 1].toLowerCase().startsWith(query.toLowerCase())) {
+                    possibleResults.push([[name, index], 1]);
+                    let word = namesplit[namesplit.length - 1]
+                    if (!word in suggestions) {
+                        suggestions[word] = 0;
+                    }
+                    suggestions[word]++;
+                } 
+                else {
+                    possibleResults.push([[name, index], 0]);
                 }
-                suggestions[word]++;
-            } 
-            else {
-                possibleResults.push([[name, index], 0]);
+                
             }
-            
+            index ++;
+        } catch (error) {
+            console.log(`Suggestion failed to load from ${error}`)
         }
-        index ++;
     }
 
     let sortedSuggestionsArray = Object.entries(suggestions);
@@ -63,24 +68,29 @@ function search(query) {
     let possibleResults = [];
     let index = 0;
     for (let value of people) {
-        let name = value.n;
-        if (name.toLowerCase().includes(query.toLowerCase())) {
-            resultsPlaced = true;
-            if (name.split(" ")[1].toLowerCase() === query.toLowerCase()) {
-                possibleResults.push([[name, index], 3])
+        try {
+            let name = value.n;
+            if (name.toLowerCase().includes(query.toLowerCase())) {
+                resultsPlaced = true;
+                const namesplit = name.split(" ")
+                if (namesplit[namesplit.length - 1].toLowerCase() === query.toLowerCase()) {
+                    possibleResults.push([[name, index], 3])
+                }
+                else if (name.toLowerCase().startsWith(query.toLowerCase())) {
+                    possibleResults.push([[name, index], 2])
+                }
+                else if (namesplit[namesplit.length-1].toLowerCase().startsWith(query.toLowerCase())) {
+                    possibleResults.push([[name, index], 1]);
+                } 
+                else {
+                    possibleResults.push([[name, index], 0]);
+                }
+                
             }
-            else if (name.toLowerCase().startsWith(query.toLowerCase())) {
-                possibleResults.push([[name, index], 2])
-            }
-            else if (name.split(" ")[1].toLowerCase().startsWith(query.toLowerCase())) {
-                possibleResults.push([[name, index], 1]);
-            } 
-            else {
-                possibleResults.push([[name, index], 0]);
-            }
-            
+            index ++;
+        } catch (error) {
+            console.log(`Result failed to load`, value, "from", error)
         }
-        index ++;
     }
 
     let sortedSuggestionsArray = Object.entries(suggestions);
