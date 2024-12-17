@@ -70,6 +70,36 @@ function addDiv(title, content="", backcontent="") {
     otherDivs.push(Div);
 }
 
+function formatecalendar(birthdate) {
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    let numends = ["th","st", "nd", "rd", "th", "th", "th", "th", "th", "th"]
+    return "The "+birthdate[0]+getnumbersuffex(birthdate[0])+" of "+months[birthdate[1]-1]+", "+birthdate[2];
+}
+
+function parsechip(chip) {
+    if (chip.t === "default") {
+        addDiv(chip.h, chip.c)
+    }
+    else if (chip.t === "birthdate") {
+        addDiv(chip.h, formatecalendar(chip.c)+` (${calculateAge(chip.c[0],chip.c[1],chip.c[2])} years)`)
+    }
+    else if (chip.t === "calendar") {
+        addDiv(chip.h, formatecalendar(chip.c))
+    }
+    else if (chip.t === "length") {
+        addDiv(chip.h, `${chip.c.v} ${chip.c.u}`)
+    }
+    else if (chip.t === "weight") {
+        addDiv(chip.h, `${chip.c.v} ${chip.c.u}`)
+    }
+    else if (chip.t === "family") {
+        addDiv(chip.h, chip.c)
+    }
+    else if (chip.t === "interest") {
+        addDiv(chip.h)
+    }
+}
+
 function addHeading(heading) {
     const h = document.createElement("h1");
     h.textContent = heading;
@@ -108,30 +138,37 @@ function calculateAge(day, month, year) {
     return age;
 }
 
-function formateBirthdaybirthdate(birthdate) {
-    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    let numends = ["th","st", "nd", "rd", "th", "th", "th", "th", "th", "th"]
-    return "The "+birthdate[0]+numends[birthdate[0]%10]+" of "+months[birthdate[1]-1]+", "+birthdate[2];
+function getnumbersuffex(number) {
+    if (number%100<20 && number%100>10) {
+        return "th"
+    } else {
+        return numends[number]
+    }
 }
 
 if (people.length > id-1) {
+    const persondata = people[id]
     const titleDiv = document.createElement("div");
     titleDiv.id = "titleDiv";
 
     profileContent.appendChild(titleDiv);
 
     const profilePic = document.createElement("img");
-    if ("pfp" in people[id]) {
-        profilePic.src = people[id]["pfp"];
+    if ("pfp" in persondata) {
+        profilePic.src = persondata["pfp"];
     } else {
-        if (people[id]["gender"] === "male") profilePic.src = "images/pfp/maleplaceholder.png";
-        else if (people[id]["gender"] === "female") profilePic.src = "images/pfp/femaleplaceholder.png";
+        if (persondata["gender"]){
+            if (persondata["gender"] === "male") profilePic.src = "images/pfp/maleplaceholder.png";
+            else if (persondata["gender"] === "female") profilePic.src = "images/pfp/femaleplaceholder.png";
+        } else {
+            profilePic.src = "images/pfp/maleplaceholder.png"
+        }
     }
 
     profilePic.id = "pfp"
-    profilePic.alt = people[id]["name"]+"'s Profile Picture"
+    profilePic.alt = persondata["n"]+"'s Profile Picture"
     titleDiv.appendChild(profilePic);
-    enlargedpfp.src = people[id]["pfp"];
+    enlargedpfp.src = profilePic.src;
 
     profilePic.addEventListener("click", function(event) {
         if (showing) {
@@ -148,65 +185,34 @@ if (people.length > id-1) {
             sleep(100).then(() => { disappear = true; showing = true;});
             enlarged.classList.add("show");
             enlarged.classList.add("pfp");
-            enlargedp.textContent = content;
-            enlargedh3.textContent = title;
+            enlargedp.textContent = "";
+            enlargedh3.textContent = "";
         }
         showing = true;
     });
 
-    document.title = "Tabs Profile - "+people[id]["name"];
+    document.title = "Tabs Profile - "+persondata["n"];
     const title = document.createElement("h1");
 
-    title.textContent = people[id]["name"];
+    title.textContent = persondata["n"];
     title.id = "profileName";
     titleDiv.appendChild(title);
 
     const description = document.createElement("p");
-    description.textContent = people[id]["dis"];
+    description.textContent = persondata["d"];
     description.id = "profileDes";
     profileContent.appendChild(description);
-    if ("otherinfo" in people[id]){
-        let birthdate = people[id]["otherinfo"]["birthdate"];
-        addHeading("Other Information")
-        if ("birthdate" in people[id]["otherinfo"]) addDiv("Birthdate", formateBirthdaybirthdate(birthdate) + " (" + calculateAge(birthdate[0], birthdate[1], birthdate[2]) + " years)");
-        if ("gender" in people[id]["otherinfo"]) addDiv("Gender", people[id]["otherinfo"]["gender"]);
-        if ("email" in people[id]["otherinfo"]) addDiv("Email", people[id]["otherinfo"]["email"]);
-        if ("phone" in people[id]["otherinfo"]) addDiv("Phone", people[id]["otherinfo"]["phone"])
-        if ("height" in people[id]["otherinfo"]) addDiv("Height", people[id]["otherinfo"]["height"]+" cm")
-        if ("weight" in people[id]["otherinfo"]) addDiv("Weight", people[id]["otherinfo"]["weight"]+" kg")
-        if ("address" in people[id]["otherinfo"]) addDiv("Address", people[id]["otherinfo"]["address"])
-        if ("sexuality" in people[id]["otherinfo"]) addDiv("Sexuality", people[id]["otherinfo"]["sexuality"])
-        displayDivs();
-    }
-    if ("family" in people[id]){
-        
-        if (people[id]["family"] != {}) {
-            addHeading("Family");
-            if ("mum" in people[id]["family"]) addDiv("Mum", people[id]["family"]["mum"]);
-            if ("dad" in people[id]["family"]) addDiv("Dad", people[id]["family"]["dad"]);
-            if ("brother" in people[id]["family"]) {
-                for (let brother of people[id]["family"]["brother"]) {
-                    addDiv("Brother", brother);
-                }
-            }
-            if ("sister" in people[id]["family"]) {
-                for (let sister of people[id]["family"]["sister"]) {
-                    addDiv("Sister", sister);
-                }
-            }
-            displayDivs();
+    console.log(persondata)
+    for (let section of persondata["sections"]) {
+        addHeading(section.t)
+        for (let chip of section.c){
+            parsechip(chip)
         }
+        displayDivs()
     }
-    if ("interests" in people[id]) {
-        addHeading("Interests");
-        
-        for (let interest of people[id]["interests"]) {
-            addDiv(interest);
-        } 
-    }
-    displayDivs();
     
-} else {
+} 
+else {
     document.title = "Tabs Profile - Person Not Found";
     const title = document.createElement("h1");
     title.textContent = "Profile not found";

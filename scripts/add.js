@@ -1,3 +1,25 @@
+function detectMob() {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+    
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
+}
+
+var mobile = detectMob();
+if (mobile){
+    document.body.classList.add("mobile")
+} else {
+    document.body.classList.add("desktop")
+}
 const pfp = document.getElementById('pfp');
 const pfpholder = document.getElementById('pfpholder');
 
@@ -69,6 +91,7 @@ descriptionInput.addEventListener("blur", ()=>{
 const chipspots = document.getElementsByClassName("chipspot")
 
 function resetchip(chip) {
+    chip.id = null
     let childrentodelete = [];
     let index = 0;
     for (let child of chip.children) {
@@ -98,10 +121,19 @@ function calculateAge(day, month, year) {
     return age;
 }
 
+function getnumbersuffex(number) {
+    if (number%100<20 && number%100>10) {
+        return "th"
+    } else {
+        return numends[number]
+    }
+}
+
 const datecalc = new Date();
 
 function replacebithdatechip(addeddiv) {
     resetchip(addeddiv)
+    addeddiv.id = "birthdate"
     const chipheader = document.createElement("div")
     chipheader.textContent = "Birthdate"
     chipheader.classList.add("chipheader")
@@ -112,13 +144,58 @@ function replacebithdatechip(addeddiv) {
     const birthdateholder = document.createElement("div")
     birthdateholder.classList.add("chipheadcontent")
     birthdateholder.classList.add("birthdayholder")
-    birthdateholder.textContent = "The "+date[0]+numends[date[0]%10]+" of "+months[date[1]-1]+", "+date[2]+" ("+calculateAge(date[0],date[1],date[2])+" years)";
-
+    birthdateholder.textContent = "The "+date[0]+getnumbersuffex(date[0])+" of "+months[date[1]-1]+", "+date[2]+" ("+calculateAge(date[0],date[1],date[2])+" years)";
+    birthdateholder.id = `${date[0]},${date[1]},${date[2]}`
     birthdateholder.addEventListener("click", async ()=>{
-        const newdate = await displaycalender(date[0], date[1], date[2])
+        const newdate = await displaycalendar(date[0], date[1], date[2])
         if (newdate) {
             date = newdate;
-            birthdateholder.textContent = "The "+date[0]+numends[date[0]%10]+" of "+months[date[1]-1]+", "+date[2]+" ("+calculateAge(date[0],date[1],date[2])+" years)";
+            birthdateholder.textContent = "The "+date[0]+getnumbersuffex(date[0])+" of "+months[date[1]-1]+", "+date[2]+" ("+calculateAge(date[0],date[1],date[2])+" years)";
+            birthdateholder.id = `${date[0]},${date[1]},${date[2]}`
+        }
+
+    })
+
+    addeddiv.appendChild(birthdateholder)
+}
+
+function replacecalendarchip(addeddiv) {
+    resetchip(addeddiv)
+    addeddiv.id = "calendar"
+    const chipheader = document.createElement("div")
+    chipheader.textContent = "Event name"
+    chipheader.contentEditable = true;
+    chipheader.classList.add("chipheader")
+    chipheader.classList.add("placeholder")
+
+    chipheader.addEventListener("focus", ()=>{
+        if (chipheader.classList.contains("placeholder")) {
+            chipheader.textContent = ""
+            chipheader.classList.remove("placeholder")
+        }
+        chipheader.focus()
+    })
+
+    chipheader.addEventListener("blur", ()=>{
+        if (chipheader.textContent === "") {
+            chipheader.textContent = "Event name"
+            chipheader.classList.add("placeholder")
+        }
+    })
+    addeddiv.appendChild(chipheader)
+
+    let date = [datecalc.getDate(), datecalc.getMonth()+1, datecalc.getFullYear()]
+    const birthdateholder = document.createElement("div")
+    birthdateholder.classList.add("chipheadcontent")
+    birthdateholder.classList.add("birthdayholder")
+    birthdateholder.textContent = "The "+date[0]+getnumbersuffex(date[0])+" of "+months[date[1]-1]+", "+date[2];
+    birthdateholder.id = `${date[0]},${date[1]},${date[2]}`
+    birthdateholder.addEventListener("click", async ()=>{
+        const newdate = await displaycalendar(date[0], date[1], date[2])
+        if (newdate) {
+            date = newdate;
+            birthdateholder.textContent = "The "+date[0]+getnumbersuffex(date[0])+" of "+months[date[1]-1]+", "+date[2];
+            birthdateholder.id = `${date[0]},${date[1]},${date[2]}`
         }
 
     })
@@ -128,6 +205,7 @@ function replacebithdatechip(addeddiv) {
 
 function replacedefaultchip(addeddiv) {
     resetchip(addeddiv)
+    addeddiv.id = "default"
     const chipheader = document.createElement("div")
     chipheader.textContent = "This is a header"
     chipheader.contentEditable = true;
@@ -176,6 +254,7 @@ function replacedefaultchip(addeddiv) {
 
 function replacefamilychip(addeddiv) {
     resetchip(addeddiv)
+    addeddiv.id = "family"
     const chipheader = document.createElement("div")
     chipheader.textContent = "Family member type"
     chipheader.contentEditable = true;
@@ -224,6 +303,7 @@ function replacefamilychip(addeddiv) {
 
 function replaceinterestchip(addeddiv) {
     resetchip(addeddiv)
+    addeddiv.id = "interest"
     const chipheader = document.createElement("div")
     chipheader.textContent = "Interest"
     chipheader.contentEditable = true;
@@ -251,12 +331,12 @@ function replaceinterestchip(addeddiv) {
 const lengthunits = ["cm", "mm", "m", "km", "ft", "in", "yd", "mi"]
 function replacelengthchip(addeddiv) {
     resetchip(addeddiv)
+    addeddiv.id = "length"
     const chipheader = document.createElement("div")
     chipheader.textContent = "What Measurement"
     chipheader.contentEditable = true;
     chipheader.classList.add("chipheader")
     chipheader.classList.add("placeholder")
-
     chipheader.addEventListener("focus", ()=>{
         if (chipheader.classList.contains("placeholder")) {
             chipheader.textContent = ""
@@ -314,6 +394,8 @@ function replacelengthchip(addeddiv) {
     chipheadcontent.addEventListener("blur", ()=>{
         if (chipheadcontent.textContent === "") {
             chipheadcontent.textContent = 100
+            
+
         }
     })
 
@@ -323,6 +405,7 @@ function replacelengthchip(addeddiv) {
 const weightunits = ["kg", "g", "t", "lb", "oz", "st"]
 function replaceweightchip(addeddiv) {
     resetchip(addeddiv)
+    addeddiv.id = "weight"
     const chipheader = document.createElement("div")
     chipheader.textContent = "What Measurement"
     chipheader.contentEditable = true;
@@ -394,7 +477,7 @@ function replaceweightchip(addeddiv) {
 }
 
 const avaliablepresets = {
-    "otherinfo":["default", "birthdate", "length", "weight"],
+    "otherinfo":["default", "birthdate", "length", "weight", "calendar"],
     "family":["family"],
     "interests":["interest"],
 }
@@ -425,15 +508,17 @@ function getStartingDayOfMonth(year, month) {
     return (firstDay.getDay()+10)%7;
 }
 
-function displaycalender(day, month, year, edittext) {
+function displaycalendar(day, month, year, edittext) {
     return new Promise((resolve) => {
         let selectedmonth = month;
         let selectedyear = year;
         let selectedday = day;
         const container = document.createElement("div")
-        container.classList.add("calender")
-        container.style.left = `${mousex}px`;
-        container.style.top = `${mousey+window.scrollY}px`;
+        container.classList.add("calendar")
+        if (!mobile){
+            container.style.left = `${mousex}px`;
+        }
+        container.style.top = `${mousey+window.scrollY-40}px`;
         const topbar = document.createElement("div")
         topbar.classList.add("caltop")
         const finishbtn = document.createElement("img")
@@ -444,6 +529,16 @@ function displaycalender(day, month, year, edittext) {
             resolve([selectedday, selectedmonth, selectedyear]); 
         })
         topbar.appendChild(finishbtn)
+        if (mobile) {
+            const closebtn = document.createElement("img")
+            closebtn.classList.add("calclosebtn")
+            closebtn.src = "images/icons/close.png"
+            closebtn.addEventListener("click", ()=>{
+                container.remove()
+                resolve(null); 
+            })
+            topbar.appendChild(closebtn)
+        }
         const yeardisplay = document.createElement("input")
         yeardisplay.type = "number"
         yeardisplay.classList.add("calyear")
@@ -578,48 +673,102 @@ function displaycalender(day, month, year, edittext) {
         makedays(year, month)
         container.appendChild(dayholder)
         document.body.appendChild(container)
+        let containerhover = true
+        let start = true;
         container.addEventListener("mouseleave", ()=>{
-            container.classList.add("unhovered")
+            containerhover = false
         }) 
         document.addEventListener("click", ()=>{
-            if (container.classList.contains("unhovered")) {
-                container.remove()
-                resolve(null);
+            if (!start || mobile) {
+                if (!containerhover) {
+                    container.remove()
+                    resolve(null);
+                }
+            } else {
+                start = false
             }
         })
         container.addEventListener("mouseenter", ()=>{
-            container.classList.remove("unhovered")
+            containerhover=true
         })
-        let offsetX = 0, offsetY = 0;
-        let isDragging = false;
+        if (!mobile){
+            let offsetX = 0, offsetY = 0;
+            let isDragging = false;
 
-        topbar.addEventListener('mousedown', (e) => {
-            if (!yearinputting){
-                isDragging = true;
-                offsetX = e.clientX - container.offsetLeft;
-                offsetY = e.clientY - container.offsetTop;
+            topbar.addEventListener('mousedown', (e) => {
+                if (!yearinputting){
+                    isDragging = true;
+                    offsetX = e.clientX - container.offsetLeft;
+                    offsetY = e.clientY - container.offsetTop;
 
-                document.addEventListener('mousemove', onMouseMove);
-                document.addEventListener('mouseup', onMouseUp);
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                }
+            });
+
+            function onMouseMove(e) {
+                if (!isDragging) return;
+                container.style.left = (e.clientX - offsetX) + 'px';
+                container.style.top = (e.clientY - offsetY) + 'px';
             }
-        });
 
-        function onMouseMove(e) {
-            if (!isDragging) return;
-            container.style.left = (e.clientX - offsetX) + 'px';
-            container.style.top = (e.clientY - offsetY) + 'px';
-        }
-
-        function onMouseUp() {
-            isDragging = false;
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
+            function onMouseUp() {
+                isDragging = false;
+                document.removeEventListener('mousemove', onMouseMove);
+                document.removeEventListener('mouseup', onMouseUp);
+            }
         }
     })
 }
 
-function addchip(chiparea, element) {
+// t=type h=heading c=content u=unit
+function parsechipdata(chip) {
+    const headingelement = chip.getElementsByClassName("chipheader")
+    const contentelement = chip.getElementsByClassName("chipheadcontent")
+    let heading = ""
+    let content = ""
+    if (headingelement.length > 0) {
+        heading = headingelement[0].textContent
+    }
+    if (contentelement.length > 0) {
+        content = contentelement[0].textContent
+    }
+    console.log(chip.id)
+    if (chip.id === "birthdate") {
+        const date = chip.getElementsByClassName("chipheadcontent")[0].id.split(",")
+        let processeddate = []
+        for (let value of date) {
+            processeddate.push(Number(value))
+        }
+        return {"t":"birthdate", "h":"Birthdate", "c":processeddate}
+    }
+    else if (chip.id === "calendar") {
+        const date = chip.getElementsByClassName("chipheadcontent")[0].id.split(",")
+        let processeddate = []
+        for (let value of date) {
+            processeddate.push(Number(value))
+        }
+        return {"t":"calendar", "h":heading, "c":processeddate}
+    }
+    else if (chip.id === "default") {
+        return {"t":"default", "h":heading, "c":content}
+    }
+    else if (chip.id === "length") {
+        return {"t":"length", "h":heading, "c":{"v":Number(chip.getElementsByClassName("chipheadcontent")[0].textContent), "u":chip.getElementsByClassName("munit")[0].textContent}}
+    }
+    else if (chip.id === "weight") {
+        return {"t":"weight", "h":heading, "c":{"v":Number(chip.getElementsByClassName("chipheadcontent")[0].textContent), "u":chip.getElementsByClassName("munit")[0].textContent}}
+    } 
+    else if (chip.id === "family") {
+        return {"t":"family", "h":heading, "c":content}
+    }
+    else if (chip.id === "interest") {
+        return {"t":"interest", "h":heading}
+    }
+    return null
+}
 
+function addchip(chiparea, element) {
     const addeddiv = document.createElement("div")
     addeddiv.classList.add("infochip")
 
@@ -705,6 +854,18 @@ function addchip(chiparea, element) {
             presetsdropdown.appendChild(birthdatepreset)
         }
 
+        if (avaliablepresets[chiparea.id].includes("calendar")){
+            const calendarpreset = document.createElement("div");
+            calendarpreset.classList.add("presetsoption");
+            calendarpreset.textContent = "calendar"
+
+            calendarpreset.addEventListener("click", ()=>{
+                replacecalendarchip(addeddiv)
+            })
+            presetsdropdown.appendChild(calendarpreset)
+        }
+
+
         if (avaliablepresets[chiparea.id].includes("family")){
             const familypreset = document.createElement("div");
             familypreset.classList.add("presetsoption");
@@ -757,6 +918,48 @@ function addchip(chiparea, element) {
     chiparea.appendChild(element)
 
 }
+// localStorage.setItem('tabspeople', JSON.stringify([]));
+const addbutton = document.getElementById("addbutton")
+addbutton.addEventListener("click", () => {
+    if (!addbutton.classList.contains("adding")){
+        addbutton.textContent = "Adding Profile"
+        addbutton.classList.add("adding")
+        let existingpeople = []
+        const localStoragepeople = localStorage.getItem("tabspeople")
+        if (localStoragepeople) {
+            existingpeople = JSON.parse(localStoragepeople)
+        }
+        let addingdate = {}
+        addingdate.n = textEdit.textContent
+        addingdate.d = descriptionInput.textContent
+        let sections = []
+        let infosections = document.getElementById("info").getElementsByClassName("infosection")
+        for (let infosection of infosections) {
+            let chips = []
+            for (let chip of infosection.getElementsByClassName("chipspot")[0].children) {
+                let chipdata = parsechipdata(chip)
+                if (chipdata) {
+                    chips.push(chipdata)
+                }
+            }
+            if (chips.length > 0) {
+                sections.push({"t":infosection.getElementsByClassName("profilehead")[0].textContent, "c":chips})
+            }
+        }
+        if (sections.length > 0) {
+            addingdate.sections = sections
+        }
+        existingpeople.push(addingdate)
+        localStorage.setItem('tabspeople', JSON.stringify(existingpeople));
+
+        console.log(existingpeople)
+        
+        addbutton.textContent = "Added"
+        refreshdata()
+        addbutton.classList.remove("adding")
+        sleep(1000).then(()=>{if (!addbutton.classList.contains("adding")) addbutton.textContent = "Add Profile"})
+    }
+})
 
 for (let spot of chipspots) {
     const addelement = document.createElement("div");

@@ -3,7 +3,7 @@ function getSuggestions(query){
     let suggestions = {};
     let index = 0;
     for (let value of people) {
-        let name = value["name"];
+        let name = value["n"];
         if (name.toLowerCase().includes(query.toLowerCase())) {
             resultsPlaced = true;
             if (name.split(" ")[1].toLowerCase() === query.toLowerCase()) {
@@ -63,7 +63,7 @@ function search(query) {
     let possibleResults = [];
     let index = 0;
     for (let value of people) {
-        let name = value["name"];
+        let name = value.n;
         if (name.toLowerCase().includes(query.toLowerCase())) {
             resultsPlaced = true;
             if (name.split(" ")[1].toLowerCase() === query.toLowerCase()) {
