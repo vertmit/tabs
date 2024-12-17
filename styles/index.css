@@ -40,7 +40,6 @@
     max-width: 1000px;
     border: 4px solid var(--text_colour); 
     border-radius: 40px;
-    padding-bottom: 5px;
     box-sizing: border-box;
     
     position: absolute;
@@ -114,6 +113,10 @@ a {
     color: var(--text_colour);
 }
 
+#topSearchForm {
+    display: flex;
+}
+
 .suggestion:hover {
     background-color: var(--hover_colour);
 }
@@ -147,7 +150,6 @@ input#search {
     width: 30px;
     height: 30px;
     padding-right: 20px;
-    padding-block: auto;
 }
 
 #search:focus::placeholder {

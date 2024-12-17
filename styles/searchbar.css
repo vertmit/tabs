@@ -87,6 +87,11 @@ input#topSearch:focus    {
     outline: none;
 }
 
+#addlink {
+    width:20px;
+    filter: var(--invert_amount)
+}
+
 h2 {
     margin: 0px;
     margin-block: auto;

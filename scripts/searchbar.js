@@ -81,9 +81,9 @@ input.addEventListener('input', () => {
     }
 });
 
-searchdiv.style.display = 'block';
+searchdiv.style.display = 'flex';
 input.addEventListener('focus', () => {
-    searchdiv.style.display = 'block';
+    searchdiv.style.display = 'flex';
 });
 
 searchdiv.addEventListener('mousedown', (event) => {

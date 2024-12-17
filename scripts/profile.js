@@ -202,13 +202,14 @@ if (people.length > id-1) {
     description.textContent = persondata["d"];
     description.id = "profileDes";
     profileContent.appendChild(description);
-    console.log(persondata)
-    for (let section of persondata["sections"]) {
-        addHeading(section.t)
-        for (let chip of section.c){
-            parsechip(chip)
+    if ("sections" in persondata){
+        for (let section of persondata["sections"]) {
+            addHeading(section.t)
+            for (let chip of section.c){
+                parsechip(chip)
+            }
+            displayDivs()
         }
-        displayDivs()
     }
     
 } 

@@ -20,7 +20,16 @@ function addDiv(content, description, index) {
     newDiv.classList.add('result');
     
     const profilePic = document.createElement("img");
-    profilePic.src = people[index]["pfp"];
+    if ("pfp" in people[index]) {
+        profilePic.src = people[index]["pfp"];
+    } else {
+        if (people[index]["gender"]){
+            if (people[index]["gender"] === "male") profilePic.src = "images/pfp/maleplaceholder.png";
+            else if (people[index]["gender"] === "female") profilePic.src = "images/pfp/femaleplaceholder.png";
+        } else {
+            profilePic.src = "images/pfp/maleplaceholder.png"
+        }
+    }
     profilePic.id = "searchPfp";
     nameDiv.appendChild(profilePic);
 
@@ -47,7 +56,7 @@ let index = 0;
 let possibleResults = [];
 
 for (let value of people) {
-    let name = value["name"];
+    let name = value["n"];
     if (name.toLowerCase().includes(searchQuery.toLowerCase())) {
         resultsPlaced = true;
         if (name.toLowerCase().startsWith(searchQuery)) {
@@ -67,8 +76,7 @@ possibleResults = search(searchQuery);
 
 if (resultsPlaced) {
     for (let result of possibleResults) {
-        
-        addDiv(people[result[2]]["name"],people[result[2]]["dis"],result[2])
+        addDiv(people[result[2]]["n"],people[result[2]]["d"],result[2])
     }
 } else {
     const newDiv = document.createElement("div");
