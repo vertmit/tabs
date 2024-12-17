@@ -72,8 +72,9 @@ input#topSearch::selection {
     color: var(--bg_colour); 
 }
 
-form#topSearchForm {
-    flex: 1;
+#topSearchForm {
+    display: flex;
+    align-items: center;
 }
 
 input#topSearch:focus::placeholder {
@@ -88,8 +89,9 @@ input#topSearch:focus    {
 }
 
 #addlink {
-    width:20px;
-    filter: var(--invert_amount)
+    width:25px;
+    filter: var(--invert_amount);
+    padding-right: 7px;
 }
 
 h2 {
@@ -146,5 +148,9 @@ a {
         margin-top: 13px;
         margin-bottom: 16px;
     }
-    
+    #addlink {
+        width:20px;
+        filter: var(--invert_amount);
+        padding-right: 5px;
+    }
 }

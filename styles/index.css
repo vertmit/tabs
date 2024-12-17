@@ -141,7 +141,7 @@ input#search {
 }
 
 #searchbar {
-    display: block;
+    display: flex;
     align-items: center;
 }
 
@@ -165,6 +165,7 @@ input#search {
 
 #mainSearch {
     width: 100%;
+    
 }
 
 #container {
