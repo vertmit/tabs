@@ -159,8 +159,8 @@ if (people.length > id-1) {
     profileContent.appendChild(titleDiv);
 
     const profilePic = document.createElement("img");
-    if ("pfp" in persondata) {
-        profilePic.src = persondata["pfp"];
+    if (persondata.p) {
+        profilePic.src = localStorage.getItem(persondata.p);
     } else {
         if (persondata["gender"]){
             if (persondata["gender"] === "male") profilePic.src = "images/pfp/maleplaceholder.png";

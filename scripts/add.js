@@ -58,6 +58,7 @@ pfpholder.addEventListener('click', function () {
             const reader = new FileReader();
 
             reader.onload = function (e) {
+                console.log(e.target.result)
                 pfp.src = e.target.result;
             };
 
@@ -733,7 +734,7 @@ function parsechipdata(chip) {
     if (contentelement.length > 0) {
         content = contentelement[0].textContent
     }
-    console.log(chip.id)
+
     if (chip.id === "birthdate") {
         const date = chip.getElementsByClassName("chipheadcontent")[0].id.split(",")
         let processeddate = []
@@ -918,44 +919,70 @@ function addchip(chiparea, element) {
     chiparea.appendChild(element)
 
 }
+
+function hashString(string) {
+    string = String(string)
+    let hash = 0;
+
+    if (string.length == 0) return hash;
+
+    for (i = 0; i < string.length; i++) {
+        char = string.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+
+    return hash;
+}
+
 // localStorage.setItem('tabspeople', JSON.stringify([]));
 const addbutton = document.getElementById("addbutton")
 addbutton.addEventListener("click", () => {
     if (!addbutton.classList.contains("adding")){
-        addbutton.textContent = "Adding Profile"
-        addbutton.classList.add("adding")
-        let existingpeople = []
-        const localStoragepeople = localStorage.getItem("tabspeople")
-        if (localStoragepeople) {
-            existingpeople = JSON.parse(localStoragepeople)
-        }
-        let addingdate = {}
-        addingdate.n = textEdit.textContent
-        addingdate.d = descriptionInput.textContent
-        let sections = []
-        let infosections = document.getElementById("info").getElementsByClassName("infosection")
-        for (let infosection of infosections) {
-            let chips = []
-            for (let chip of infosection.getElementsByClassName("chipspot")[0].children) {
-                let chipdata = parsechipdata(chip)
-                if (chipdata) {
-                    chips.push(chipdata)
+        try {
+            addbutton.textContent = "Adding Profile"
+            addbutton.classList.add("adding")
+            let existingpeople = []
+            const localStoragepeople = localStorage.getItem("tabspeople")
+            if (localStoragepeople) {
+                existingpeople = JSON.parse(localStoragepeople)
+            }
+            let addingdate = {}
+            addingdate.n = textEdit.textContent
+            addingdate.d = descriptionInput.textContent
+            console.log(hashString("hello world"))
+            let pfplocation = `pfp:${hashString(pfp.src)}`
+            localStorage.setItem(pfplocation, pfp.src)
+            addingdate.p = pfplocation
+
+            let sections = []
+            let infosections = document.getElementById("info").getElementsByClassName("infosection")
+            for (let infosection of infosections) {
+                let chips = []
+                for (let chip of infosection.getElementsByClassName("chipspot")[0].children) {
+                    let chipdata = parsechipdata(chip)
+                    if (chipdata) {
+                        chips.push(chipdata)
+                    }
+                }
+                if (chips.length > 0) {
+                    sections.push({"t":infosection.getElementsByClassName("profilehead")[0].textContent, "c":chips})
                 }
             }
-            if (chips.length > 0) {
-                sections.push({"t":infosection.getElementsByClassName("profilehead")[0].textContent, "c":chips})
+            if (sections.length > 0) {
+                addingdate.sections = sections
             }
-        }
-        if (sections.length > 0) {
-            addingdate.sections = sections
-        }
-        existingpeople.push(addingdate)
-        localStorage.setItem('tabspeople', JSON.stringify(existingpeople));
+            existingpeople.push(addingdate)
+            localStorage.setItem('tabspeople', JSON.stringify(existingpeople));
 
-        console.log(existingpeople)
+            console.log(existingpeople)
+            
+            addbutton.textContent = "Added"
+            refreshdata()
+        } catch (error) {
+            addbutton.textContent = "Failed"
+        }
         
-        addbutton.textContent = "Added"
-        refreshdata()
         addbutton.classList.remove("adding")
         sleep(1000).then(()=>{if (!addbutton.classList.contains("adding")) addbutton.textContent = "Add Profile"})
     }

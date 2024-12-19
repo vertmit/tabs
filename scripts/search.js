@@ -20,8 +20,9 @@ function addDiv(content, description, index) {
     newDiv.classList.add('result');
     
     const profilePic = document.createElement("img");
-    if ("pfp" in people[index]) {
-        profilePic.src = people[index]["pfp"];
+    if (people[index].p) {
+        console.log(people[index].p)
+        profilePic.src = localStorage.getItem(people[index].p);
     } else {
         if (people[index]["gender"]){
             if (people[index]["gender"] === "male") profilePic.src = "images/pfp/maleplaceholder.png";
