@@ -58,7 +58,6 @@ pfpholder.addEventListener('click', function () {
             const reader = new FileReader();
 
             reader.onload = function (e) {
-                console.log(e.target.result)
                 pfp.src = e.target.result;
             };
 
@@ -935,6 +934,41 @@ function hashString(string) {
     return hash;
 }
 
+function viewerror(error) {
+    console.log(error);
+    if (mobile) {
+        const viewpopup = document.createElement("div")
+        viewpopup.classList.add("popup")
+        viewpopup.textContent = "View Error"
+        viewpopup.addEventListener("click", ()=>{
+            const consoleview = document.createElement("div")
+            consoleview.classList.add("console")
+            consoleview.textContent = error
+            
+            const exit = document.createElement("div")
+            exit.textContent = "[X]"
+            exit.classList.add("exit")
+
+            exit.addEventListener("click", ()=>{
+                consoleview.remove()
+            })
+
+            consoleview.appendChild(exit)
+            document.body.appendChild(consoleview)
+        })
+        document.body.appendChild(viewpopup)
+        sleep(1).then(()=>{
+            viewpopup.classList.add("view")
+        })
+        sleep(3000).then(()=>{
+            viewpopup.classList.remove("view")
+            sleep(250).then(()=>{
+                viewpopup.remove()
+            })
+        })
+    }
+}
+
 // localStorage.setItem('tabspeople', JSON.stringify([]));
 const addbutton = document.getElementById("addbutton")
 addbutton.addEventListener("click", () => {
@@ -950,7 +984,6 @@ addbutton.addEventListener("click", () => {
             let addingdate = {}
             addingdate.n = textEdit.textContent
             addingdate.d = descriptionInput.textContent
-            console.log(hashString("hello world"))
             let pfplocation = `pfp:${hashString(pfp.src)}`
             localStorage.setItem(pfplocation, pfp.src)
             addingdate.p = pfplocation
@@ -974,17 +1007,21 @@ addbutton.addEventListener("click", () => {
             }
             existingpeople.push(addingdate)
             localStorage.setItem('tabspeople', JSON.stringify(existingpeople));
-
-            console.log(existingpeople)
             
             addbutton.textContent = "Added"
             refreshdata()
-        } catch (error) {
+        } catch (e) {
             addbutton.textContent = "Failed"
+            viewerror(e)
         }
         
-        addbutton.classList.remove("adding")
-        sleep(1000).then(()=>{if (!addbutton.classList.contains("adding")) addbutton.textContent = "Add Profile"})
+        addbutton.classList.remove("adding");
+
+        sleep(1000).then(()=>{
+            if (!addbutton.classList.contains("adding")) {
+                addbutton.textContent = "Add Profile"; 
+            }
+        })
     }
 })
 
