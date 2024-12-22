@@ -1,3 +1,23 @@
+let usearch = urlParams.get('u');
+let edit = false
+let profiledata = []
+if (usearch !== null) {
+    usearch = Number(usearch)
+    if (profiledata.length > usearch - 1){
+        edit = true
+        profiledata = JSON.parse(localStorage.getItem("tabspeople"))[usearch]
+        document.getElementById("nameInput").textContent = profiledata.n
+        document.getElementById("nameInput").classList.remove("placeholder")
+    }
+}
+
+let sectionname = []
+if ("sections" in profiledata) {
+    for (let section of profiledata.sections) {
+        sectionname.push(section.t)
+    }
+}
+
 function detectMob() {
     const toMatch = [
         /Android/i,
@@ -21,6 +41,10 @@ if (mobile){
     document.body.classList.add("desktop")
 }
 const pfp = document.getElementById('pfp');
+
+if (edit && "p" in profiledata) {
+    pfp.src = localStorage.getItem(profiledata.p)
+}
 const pfpholder = document.getElementById('pfpholder');
 
 const textEdit = document.getElementById('nameInput');
@@ -70,9 +94,12 @@ pfpholder.addEventListener('click', function () {
 const descriptionInput = document.getElementById('descriptionInput');
 
 const descriptionPlaceholderText = "This person could have a good discription, add one."
-
-descriptionInput.textContent = descriptionPlaceholderText;
-descriptionInput.classList.add("placeholder");
+if (!edit){
+    descriptionInput.textContent = descriptionPlaceholderText;
+    descriptionInput.classList.add("placeholder");
+} else {
+    descriptionInput.textContent = profiledata.d
+}
 
 descriptionInput.addEventListener("click", () => {
     if (descriptionInput.classList.contains("placeholder")) {
@@ -88,7 +115,7 @@ descriptionInput.addEventListener("blur", ()=>{
     }
 })
 
-const chipspots = document.getElementsByClassName("chipspot")
+const chipspots = document.getElementById("info").children
 
 function resetchip(chip) {
     chip.id = null
@@ -131,7 +158,7 @@ function getnumbersuffex(number) {
 
 const datecalc = new Date();
 
-function replacebithdatechip(addeddiv) {
+function replacebithdatechip(addeddiv, date= [datecalc.getDate(), datecalc.getMonth()+1, datecalc.getFullYear()]) {
     resetchip(addeddiv)
     addeddiv.id = "birthdate"
     const chipheader = document.createElement("div")
@@ -139,7 +166,7 @@ function replacebithdatechip(addeddiv) {
     chipheader.classList.add("chipheader")
     addeddiv.appendChild(chipheader)
 
-    let date = [datecalc.getDate(), datecalc.getMonth()+1, datecalc.getFullYear()]
+     
 
     const birthdateholder = document.createElement("div")
     birthdateholder.classList.add("chipheadcontent")
@@ -159,14 +186,20 @@ function replacebithdatechip(addeddiv) {
     addeddiv.appendChild(birthdateholder)
 }
 
-function replacecalendarchip(addeddiv) {
+function replacecalendarchip(addeddiv, title="", date = [datecalc.getDate(), datecalc.getMonth()+1, datecalc.getFullYear()]) {
     resetchip(addeddiv)
     addeddiv.id = "calendar"
     const chipheader = document.createElement("div")
-    chipheader.textContent = "Event name"
+    if (title!=="") {
+        chipheader.textContent = title
+    } else {
+        chipheader.textContent = "Event name"
+        chipheader.classList.add("placeholder")
+    }
+    
     chipheader.contentEditable = true;
     chipheader.classList.add("chipheader")
-    chipheader.classList.add("placeholder")
+    
 
     chipheader.addEventListener("focus", ()=>{
         if (chipheader.classList.contains("placeholder")) {
@@ -184,7 +217,6 @@ function replacecalendarchip(addeddiv) {
     })
     addeddiv.appendChild(chipheader)
 
-    let date = [datecalc.getDate(), datecalc.getMonth()+1, datecalc.getFullYear()]
     const birthdateholder = document.createElement("div")
     birthdateholder.classList.add("chipheadcontent")
     birthdateholder.classList.add("birthdayholder")
@@ -203,14 +235,19 @@ function replacecalendarchip(addeddiv) {
     addeddiv.appendChild(birthdateholder)
 }
 
-function replacedefaultchip(addeddiv) {
+function replacedefaultchip(addeddiv, title="", content="") {
     resetchip(addeddiv)
     addeddiv.id = "default"
     const chipheader = document.createElement("div")
-    chipheader.textContent = "This is a header"
     chipheader.contentEditable = true;
     chipheader.classList.add("chipheader")
-    chipheader.classList.add("placeholder")
+    if (title !=="") {
+        chipheader.textContent = title
+    }
+    else {
+        chipheader.textContent = "This is a header"
+        chipheader.classList.add("placeholder")
+    }
 
     chipheader.addEventListener("focus", ()=>{
         if (chipheader.classList.contains("placeholder")) {
@@ -228,10 +265,16 @@ function replacedefaultchip(addeddiv) {
     })
 
     const chipheadcontent = document.createElement("div")
-    chipheadcontent.textContent = "And this is the content the header is presenting."
     chipheadcontent.contentEditable = true;
     chipheadcontent.classList.add("chipheadcontent")
-    chipheadcontent.classList.add("placeholder")
+    if (content !== "") {
+        chipheadcontent.textContent = content
+    }
+    else { 
+        chipheadcontent.textContent = "And this is the content the header is presenting."
+        chipheadcontent.classList.add("placeholder")
+    }
+    
 
     chipheadcontent.addEventListener("focus", ()=>{
         if (chipheadcontent.classList.contains("placeholder")) {
@@ -252,15 +295,20 @@ function replacedefaultchip(addeddiv) {
     addeddiv.appendChild(chipheadcontent)
 }
 
-function replacefamilychip(addeddiv) {
+function replacefamilychip(addeddiv, title="", content="") {
     resetchip(addeddiv)
     addeddiv.id = "family"
     const chipheader = document.createElement("div")
-    chipheader.textContent = "Family member type"
+    if (title!=="") {
+        chipheader.textContent = title
+    } else {
+        chipheader.textContent = "Family member type"
+        chipheader.classList.add("placeholder")
+    }
+    
     chipheader.contentEditable = true;
     chipheader.classList.add("chipheader")
-    chipheader.classList.add("placeholder")
-
+    
     chipheader.addEventListener("focus", ()=>{
         if (chipheader.classList.contains("placeholder")) {
             chipheader.textContent = ""
@@ -277,10 +325,16 @@ function replacefamilychip(addeddiv) {
     })
 
     const chipheadcontent = document.createElement("div")
-    chipheadcontent.textContent = "Family member name"
+    if (content!=="") {
+        chipheadcontent.textContent = content
+    } else {
+        chipheadcontent.textContent = "Family member name"
+        chipheadcontent.classList.add("placeholder")
+    }
+    
     chipheadcontent.contentEditable = true;
     chipheadcontent.classList.add("chipheadcontent")
-    chipheadcontent.classList.add("placeholder")
+    
 
     chipheadcontent.addEventListener("focus", ()=>{
         if (chipheadcontent.classList.contains("placeholder")) {
@@ -301,14 +355,20 @@ function replacefamilychip(addeddiv) {
     addeddiv.appendChild(chipheadcontent)
 }
 
-function replaceinterestchip(addeddiv) {
+function replaceinterestchip(addeddiv, interest="") {
     resetchip(addeddiv)
     addeddiv.id = "interest"
     const chipheader = document.createElement("div")
-    chipheader.textContent = "Interest"
+    if (interest !== "") {
+        chipheader.textContent = interest
+    }
+    else {
+        chipheader.classList.add("placeholder")
+        chipheader.textContent = "Interest"
+    }
     chipheader.contentEditable = true;
     chipheader.classList.add("chipheader")
-    chipheader.classList.add("placeholder")
+    
 
     chipheader.addEventListener("focus", ()=>{
         if (chipheader.classList.contains("placeholder")) {
@@ -329,14 +389,20 @@ function replaceinterestchip(addeddiv) {
 }
 
 const lengthunits = ["cm", "mm", "m", "km", "ft", "in", "yd", "mi"]
-function replacelengthchip(addeddiv) {
+function replacelengthchip(addeddiv, title="", content="", unit="") {
     resetchip(addeddiv)
     addeddiv.id = "length"
     const chipheader = document.createElement("div")
-    chipheader.textContent = "What Measurement"
-    chipheader.contentEditable = true;
     chipheader.classList.add("chipheader")
-    chipheader.classList.add("placeholder")
+    chipheader.contentEditable = true;
+    if (title !=="") {
+        chipheader.textContent = title
+    }
+    else {
+        chipheader.textContent = "What Measurement"
+        chipheader.classList.add("placeholder")
+    }
+    
     chipheader.addEventListener("focus", ()=>{
         if (chipheader.classList.contains("placeholder")) {
             chipheader.textContent = ""
@@ -356,7 +422,11 @@ function replacelengthchip(addeddiv) {
 
     const unitdisplay = document.createElement("div");
     unitdisplay.classList.add("munit")
-    unitdisplay.textContent = "cm"
+    if (unit!=="") {
+        unitdisplay.textContent = unit
+    } else {
+        unitdisplay.textContent = "cm"
+    }
 
     unitdisplay.addEventListener("click", ()=>{
         const unitholder = document.createElement("div");
@@ -381,7 +451,12 @@ function replacelengthchip(addeddiv) {
     })
 
     const chipheadcontent = document.createElement("div")
-    chipheadcontent.textContent = 100
+    if (content !== "") {
+        chipheadcontent.textContent = content
+    }
+    else {
+        chipheadcontent.textContent = 100
+    }
     chipheadcontent.contentEditable = true;
     chipheadcontent.classList.add("chipheadcontent")
     measurementholder.appendChild(chipheadcontent)
@@ -403,14 +478,20 @@ function replacelengthchip(addeddiv) {
     addeddiv.appendChild(measurementholder)
 }
 const weightunits = ["kg", "g", "t", "lb", "oz", "st"]
-function replaceweightchip(addeddiv) {
+function replaceweightchip(addeddiv, title="", content="", unit="") {
     resetchip(addeddiv)
     addeddiv.id = "weight"
     const chipheader = document.createElement("div")
-    chipheader.textContent = "What Measurement"
+    if (title !=="") {
+        chipheader.textContent = title
+    } else {
+        chipheader.textContent = "What Measurement"
+        chipheader.classList.add("placeholder")
+    }
+    
     chipheader.contentEditable = true;
     chipheader.classList.add("chipheader")
-    chipheader.classList.add("placeholder")
+    
 
     chipheader.addEventListener("focus", ()=>{
         if (chipheader.classList.contains("placeholder")) {
@@ -431,8 +512,12 @@ function replaceweightchip(addeddiv) {
 
     const unitdisplay = document.createElement("div");
     unitdisplay.classList.add("munit")
-    unitdisplay.textContent = "kg"
-
+    if (unit !== "") {
+        unitdisplay.textContent = unit
+    }
+    else {
+        unitdisplay.textContent = "kg"
+    }   
     unitdisplay.addEventListener("click", ()=>{
         const unitholder = document.createElement("div");
         unitholder.addEventListener("mouseleave", ()=>{
@@ -456,7 +541,11 @@ function replaceweightchip(addeddiv) {
     })
 
     const chipheadcontent = document.createElement("div")
-    chipheadcontent.textContent = 100
+    if (content!=="") {
+        chipheadcontent.textContent = content
+    } else {
+        chipheadcontent.textContent = 100
+    }
     chipheadcontent.contentEditable = true;
     chipheadcontent.classList.add("chipheadcontent")
     measurementholder.appendChild(chipheadcontent)
@@ -508,7 +597,7 @@ function getStartingDayOfMonth(year, month) {
     return (firstDay.getDay()+10)%7;
 }
 
-function displaycalendar(day, month, year, edittext) {
+function displaycalendar(day, month, year) {
     return new Promise((resolve) => {
         let selectedmonth = month;
         let selectedyear = year;
@@ -916,7 +1005,7 @@ function addchip(chiparea, element) {
 
     chiparea.appendChild(addeddiv)
     chiparea.appendChild(element)
-
+    return addeddiv
 }
 
 function hashString(string) {
@@ -971,10 +1060,17 @@ function viewerror(error) {
 
 // localStorage.setItem('tabspeople', JSON.stringify([]));
 const addbutton = document.getElementById("addbutton")
+if (edit) {
+    addbutton.textContent = "Confirm Changes"
+}
 addbutton.addEventListener("click", () => {
     if (!addbutton.classList.contains("adding")){
         try {
             addbutton.textContent = "Adding Profile"
+            if (edit) {
+                addbutton.textContent = "Editing Profile"
+            }
+            
             addbutton.classList.add("adding")
             let existingpeople = []
             const localStoragepeople = localStorage.getItem("tabspeople")
@@ -1005,10 +1101,17 @@ addbutton.addEventListener("click", () => {
             if (sections.length > 0) {
                 addingdate.sections = sections
             }
-            existingpeople.push(addingdate)
+            if (edit) {
+                existingpeople[usearch] = addingdate
+            } else {
+                existingpeople.push(addingdate)
+            }
             localStorage.setItem('tabspeople', JSON.stringify(existingpeople));
-            
             addbutton.textContent = "Added"
+            if (edit) {
+                addbutton.textContent = "Done"
+            }
+            
             refreshdata()
         } catch (e) {
             addbutton.textContent = "Failed"
@@ -1020,15 +1123,52 @@ addbutton.addEventListener("click", () => {
         sleep(1000).then(()=>{
             if (!addbutton.classList.contains("adding")) {
                 addbutton.textContent = "Add Profile"; 
+                if (edit) {
+                    addbutton.textContent = "Confirm Changes"; 
+                }
             }
         })
     }
 })
 
-for (let spot of chipspots) {
+for (let place of chipspots) {
+    const spot = place.getElementsByClassName("chipspot")[0]
     const addelement = document.createElement("div");
     addelement.classList.add("infochip");
     addelement.classList.add("addchip");
+    const titlename = place.getElementsByClassName("profilehead")[0].textContent
+    if (edit && sectionname.includes(titlename)) {
+        for (let chip of profiledata.sections[sectionname.indexOf(titlename)].c) {
+            if (chip.t === "default") {
+                const chipelem = addchip(spot, addelement)
+                replacedefaultchip(chipelem, chip.h, chip.c)
+            }
+            else if (chip.t === "birthdate") {
+                const chipelem = addchip(spot, addelement)
+                replacebithdatechip(chipelem, chip.c)
+            }
+            else if (chip.t === "calendar") {
+                const chipelem = addchip(spot, addelement)
+                replacecalendarchip(chipelem, chip.h, chip.c)
+            }
+            else if (chip.t === "length") {
+                const chipelem = addchip(spot, addelement)
+                replacelengthchip(chipelem, chip.h, chip.c.v, chip.c.u)
+            }
+            else if (chip.t === "weight") {
+                const chipelem = addchip(spot, addelement)
+                replaceweightchip(chipelem, chip.h, chip.c.v, chip.c.u)
+            }
+            else if (chip.t === "family") {
+                const chipelem = addchip(spot, addelement)
+                replacefamilychip(chipelem, chip.h, chip.c)
+            }
+            else if (chip.t === "interest") {
+                const chipelem = addchip(spot, addelement)
+                replaceinterestchip(chipelem, chip.h)
+            }
+        }
+    }
 
     const addicon = document.createElement("img");
     addicon.src = "images/icons/add.png";

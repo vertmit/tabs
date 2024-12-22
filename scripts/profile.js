@@ -151,6 +151,13 @@ function getnumbersuffex(number) {
     }
 }
 
+let mousex = 0;
+let mousey = 0;
+document.addEventListener('mousemove', function(event) {
+    mousex = event.clientX;
+    mousey = event.clientY;
+});
+
 if (people.length > id-1) {
     const persondata = people[id]
     const titleDiv = document.createElement("div");
@@ -216,7 +223,98 @@ if (people.length > id-1) {
             displayDivs()
         }
     }
-    
+    const editbtn = document.createElement("img")
+    editbtn.src = "images/icons/dots.png"
+    editbtn.id = "edit"
+    editbtn.title = "Edit"
+    document.body.appendChild(editbtn)
+    editbtn.addEventListener("click", ()=>{
+        const unitholder = document.createElement("div");
+        unitholder.addEventListener("mouseleave", ()=>{
+            unitholder.remove()
+        })
+        unitholder.classList.add("dropdown")
+        
+        const editselect = document.createElement("div");
+        editselect.classList.add("dropdownoption")
+        editselect.textContent = "Edit";
+        unitholder.appendChild(editselect);
+        editselect.addEventListener("click", ()=>{
+            window.location.href = `add?q=${searchQuery}&u=${id}`
+            unitholder.remove()
+        })
+
+        const deleteselect = document.createElement("div");
+        deleteselect.classList.add("dropdownoption")
+        deleteselect.textContent = "delete";
+        unitholder.appendChild(deleteselect);
+        deleteselect.addEventListener("click", ()=>{
+            const popupbg = document.createElement("div")
+            popupbg.classList.add("popbg")
+
+            const popup = document.createElement("div")
+            popup.classList.add("popup")
+            const title = document.createElement("h1")
+            title.textContent = "Confirm Deletion"
+
+            popup.appendChild(title)
+            const areusure = document.createElement("p")
+            const boldname = document.createElement("span")
+            boldname.classList.add("bold")
+            boldname.textContent = persondata.n
+            areusure.innerHTML = "Are you sure you want to delete "+boldname.outerHTML+"?" 
+            popup.appendChild(areusure)
+
+            const btnholder = document.createElement("div")
+            btnholder.classList.add("btnholder")
+
+            const yesbtn = document.createElement("div")
+            yesbtn.classList.add("btn")
+            yesbtn.textContent = "Yes"
+            btnholder.appendChild(yesbtn)
+
+            yesbtn.addEventListener("click", ()=> {
+                let data = JSON.parse(localStorage.getItem("tabspeople"))
+                if ("p" in persondata){
+                    const pfpsrc = persondata.p
+                    let removepfp = true
+                    let index = 0
+                    for (let person of data) {
+                        if (index !== id && person.p === pfpsrc) {
+                            removepfp = false
+                            break
+                        }
+                        index++;
+                    }
+                    if (removepfp) {
+                        localStorage.removeItem(pfpsrc)
+                    }
+                }
+
+                data.splice(id, 1);
+                localStorage.setItem("tabspeople", JSON.stringify(data))
+                
+                window.location.reload()
+            })
+
+            const nobtn = document.createElement("div")
+            nobtn.classList.add("btn")
+            nobtn.textContent = "No"
+            btnholder.appendChild(nobtn)
+            nobtn.addEventListener("click", ()=> {
+                popupbg.remove()
+            })
+
+            popup.appendChild(btnholder)
+            popupbg.appendChild(popup)
+            document.body.appendChild(popupbg)
+            
+        })
+        
+        document.body.appendChild(unitholder);
+        unitholder.style.left = `${mousex-unitholder.offsetWidth+10}px`;
+        unitholder.style.top = `${mousey+window.scrollY-10}px`;
+    })
 } 
 else {
     document.title = "Tabs Profile - Person Not Found";
