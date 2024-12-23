@@ -82,18 +82,41 @@ pfpholder.addEventListener('click', function () {
             const reader = new FileReader();
 
             reader.onload = function (e) {
-                pfp.src = e.target.result;
+                // Create an image element to load the file
+                const img = new Image();
+                img.src = e.target.result;
+
+                img.onload = function () {
+                    // Create a canvas for cropping
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    // Determine the shortest side for a 1:1 crop
+                    const shorterSide = Math.min(img.width, img.height);
+                    const cropX = (img.width - shorterSide) / 2;
+                    const cropY = (img.height - shorterSide) / 2;
+
+                    // Set canvas size to the cropped area (1:1 aspect ratio)
+                    canvas.width = shorterSide;
+                    canvas.height = shorterSide;
+
+                    // Draw the cropped image onto the canvas
+                    ctx.drawImage(img, cropX, cropY, shorterSide, shorterSide, 0, 0, shorterSide, shorterSide);
+
+                    // Convert the cropped image to a Data URL and set it as the `src` of the `pfp` element
+                    pfp.src = canvas.toDataURL('image/jpeg');
+                };
             };
 
             reader.readAsDataURL(file);
         }
-
     };
 });
 
+
 const descriptionInput = document.getElementById('descriptionInput');
 
-const descriptionPlaceholderText = "This person could have a good discription, add one."
+const descriptionPlaceholderText = "This person could have a good description, add one."
 if (!edit){
     descriptionInput.textContent = descriptionPlaceholderText;
     descriptionInput.classList.add("placeholder");
@@ -1101,8 +1124,11 @@ addbutton.addEventListener("click", () => {
             if (sections.length > 0) {
                 addingdate.sections = sections
             }
+            let user = existingpeople.length
             if (edit) {
                 existingpeople[usearch] = addingdate
+                user = usearch
+                
             } else {
                 existingpeople.push(addingdate)
             }
@@ -1113,6 +1139,7 @@ addbutton.addEventListener("click", () => {
             }
             
             refreshdata()
+            window.location.href = `profile?q=${searchQuery}&u=${user}`
         } catch (e) {
             addbutton.textContent = "Failed"
             viewerror(e)

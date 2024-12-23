@@ -255,7 +255,7 @@ Profile banner
     border-radius: 10px;
     padding-inline: 10px;
     margin:10px;
-    width:calc(50% - 60px);
+    width:calc(50% - 53px);
     transition:0.3s;
 }
 
@@ -550,7 +550,7 @@ img::selection {
     cursor: pointer;
     font-size: 25px;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     #nameInput {
         margin-block: 10, 5;
         height: 46px;
@@ -590,5 +590,8 @@ img::selection {
     }
     .defaulttext {
         font-size: 20px;
+    }
+    #addbutton {
+        font-size: 40px;
     }
 }

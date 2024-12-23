@@ -93,16 +93,6 @@ function search(query) {
         }
     }
 
-    let sortedSuggestionsArray = Object.entries(suggestions);
-
-    sortedSuggestionsArray.sort((a, b) => {
-    if (a[1] > b[1]) return -1;
-    if (a[1] < b[1]) return 1;
-    return 0;
-    });
-
-    let sortedSuggestions = sortedSuggestionsArray.map(entry => entry[0]);
-
     possibleResults.sort((a, b) => b[1]-a[1]);
     let results = [];
     for (let result of possibleResults) {
