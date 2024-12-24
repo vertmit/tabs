@@ -1,6 +1,12 @@
 let usearch = urlParams.get('u');
 let edit = false
 let profiledata = []
+
+let nsearch = urlParams.get('n');
+console.log(nsearch)
+
+let previmg = "images/pfp/maleplaceholder.png"
+
 if (usearch !== null) {
     usearch = Number(usearch)
     if (profiledata.length > usearch - 1){
@@ -8,7 +14,13 @@ if (usearch !== null) {
         profiledata = JSON.parse(localStorage.getItem("tabspeople"))[usearch]
         document.getElementById("nameInput").textContent = profiledata.n
         document.getElementById("nameInput").classList.remove("placeholder")
+        previmg = profiledata.p
     }
+}
+
+if (nsearch !== null) {
+    document.getElementById("nameInput").textContent = decodeURIComponent(nsearch)
+    document.getElementById("nameInput").classList.remove("placeholder")
 }
 
 let sectionname = []
@@ -1139,7 +1151,7 @@ addbutton.addEventListener("click", () => {
             }
             
             refreshdata()
-            window.location.href = `profile?q=${searchQuery}&u=${user}`
+            window.location.href = `profile?q=${encodeURIComponent(searchQuery)}&u=${user}`
         } catch (e) {
             addbutton.textContent = "Failed"
             viewerror(e)

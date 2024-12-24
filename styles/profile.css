@@ -66,12 +66,20 @@
 }
 
 #profileNameNF {
+    margin-bottom: 10px;
     text-align: center;
     font-size: 60px;
 }
 
 #pContent {
     margin-inline: 40px;
+}
+
+#addaccount {
+    display: block;
+    width:100%;
+    text-align: center;
+    font-size: 20px;
 }
 
 #profileDes {
@@ -336,6 +344,9 @@
     
     #profileNameNF {
         font-size: 40px;
+    }
+    #addaccount {
+        font-size: 15px;
     }
     #profileDes {
         font-size: 20px;

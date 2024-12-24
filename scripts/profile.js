@@ -158,7 +158,7 @@ document.addEventListener('mousemove', function(event) {
     mousey = event.clientY;
 });
 
-if (people.length > id-1) {
+if (people.length > 0 && people.length > id-1) {
     const persondata = people[id]
     const titleDiv = document.createElement("div");
     titleDiv.id = "titleDiv";
@@ -240,7 +240,7 @@ if (people.length > id-1) {
         editselect.textContent = "Edit";
         unitholder.appendChild(editselect);
         editselect.addEventListener("click", ()=>{
-            window.location.href = `add?q=${searchQuery}&u=${id}`
+            window.location.href = `add?q=${encodeURIComponent(searchQuery)}&u=${id}`
             unitholder.remove()
         })
 
@@ -321,6 +321,13 @@ else {
     const title = document.createElement("h1");
     title.textContent = "Profile not found";
     title.id = "profileNameNF";
+
+    const subtitle = document.createElement("a")
+    subtitle.textContent = "Add a profile?"
+    subtitle.href = "/add"
+    subtitle.id = "addaccount"
+
     profileContent.appendChild(title);
+    profileContent.appendChild(subtitle);
 }
 document.getElementById("profileDiv").appendChild(profileContent);

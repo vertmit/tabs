@@ -8,6 +8,14 @@
     transition: 0.5s;
 }
 
+#addaccount {
+    margin-top: 50px;
+    display: block;
+    margin-inline: auto;
+    text-align: center;
+    font-size: 30px;
+}
+
 .searchContentDiv {
     display: flex;
     flex-direction: row;
@@ -92,7 +100,7 @@
 }
 
 #frown {
-    padding-top: 50px;
+    margin-top: 50px;
     width: 50%;
     max-width: 500px;
     min-width: 100px;
@@ -114,12 +122,16 @@
         font-size: 20px;
     }
     #frown {
-        padding-top: 150px;
+        margin-top: 150px;
         width: 40%;
         
     }
     #searchPfp {
         width: 40px;
         height: 40px;
+    }
+    #addaccount {
+        margin-top: 150px;
+        font-size: 20px;
     }
 }

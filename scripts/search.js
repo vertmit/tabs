@@ -2,7 +2,7 @@ document.title = 'Tabs Search - "' + searchQuery + '"';
 
 function addDiv(content, description, index) {
     const link = document.createElement('a');
-    link.href = `profile?u=${index}&q=${searchQuery}`;
+    link.href = `profile?u=${index}&q=${encodeURIComponent(searchQuery)}`;
 
     const linkDiv = document.createElement('div');
     linkDiv.classList.add("linkDiv");
@@ -99,6 +99,12 @@ if (resultsPlaced) {
     frown.id = "frown";
 
     newDiv.appendChild(frown);
+
+    const subtitle = document.createElement("a")
+    subtitle.textContent = `Add ${searchQuery}'s profile?`
+    subtitle.href = `/add?q=${encodeURIComponent(searchQuery)}&n=${encodeURIComponent(searchQuery)}`
+    subtitle.id = "addaccount"
+    newDiv.appendChild(subtitle);
 
     document.getElementById("results").appendChild(newDiv);
 }
